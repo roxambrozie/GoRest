@@ -1,4 +1,4 @@
-package services.gorest.pojo.node;
+package services.gorest.models.responses;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,26 +11,40 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import services.gorest.models.User;
+import services.gorest.models.nodes._Meta;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "href"
+        "_meta",
+        "result"
 })
-public class Self {
-
-    @JsonProperty("href")
-    private String href;
+public class GetUserResponse {
+    @JsonProperty("_meta")
+    private _Meta _meta;
+    @JsonProperty("result")
+    private User result;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("href")
-    public String getHref() {
-        return href;
+    @JsonProperty("_meta")
+    public _Meta get_meta() {
+        return _meta;
     }
 
-    @JsonProperty("href")
-    public void setHref(String href) {
-        this.href = href;
+    @JsonProperty("_meta")
+    public void set_meta(_Meta _meta) {
+        this._meta = _meta;
+    }
+
+    @JsonProperty("result")
+    public User getResult() {
+        return result;
+    }
+
+    @JsonProperty("result")
+    public void setResult(User result) {
+        this.result = result;
     }
 
     @Override
@@ -50,7 +64,7 @@ public class Self {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(href).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(_meta).append(result).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -58,10 +72,12 @@ public class Self {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Self) == false) {
+        if ((other instanceof GetUserResponse) == false) {
             return false;
         }
-        Self rhs = ((Self) other);
-        return new EqualsBuilder().append(href, rhs.href).append(additionalProperties, rhs.additionalProperties).isEquals();
+        GetUserResponse rhs = ((GetUserResponse) other);
+        return new EqualsBuilder().append(_meta, rhs._meta).append(result, rhs.result).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
+
+
 }

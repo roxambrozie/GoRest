@@ -1,27 +1,24 @@
-package services.gorest.steps;
+package services.gorest.actions.user;
 
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
-import services.gorest.GoRestService;
+import services.gorest.actions.GoRestActions;
 import utils.reusable.specifications.ReusableSpecifications;
 
-import static services.gorest.GoRestService.USERS_ENDPOINT;
+public class GetUser extends GoRestActions {
 
-public class GetUserSteps {
-
-    GoRestService goRestService = new GoRestService();
-    private String GET_USER_URL = goRestService.getBaseUri() + GoRestService.GOREST_API_URI + USERS_ENDPOINT;
+    private String GET_USER_URL = getBaseUri() + USERS_ENDPOINT;
 
     @Step("I retrieve a single user based on id {0}")
     public Response getUserUsingId(int id) {
         Response response = SerenityRest.rest().given().log().all()
-                .spec(ReusableSpecifications.getGenericRequestSpec())
+                .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(GET_USER_URL)
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");
-        response.then().log().all();
+        response.then().log().all().spec(ReusableSpecifications.responseSpec());
 
         return response;
     }

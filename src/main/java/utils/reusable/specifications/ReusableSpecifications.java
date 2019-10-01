@@ -20,7 +20,7 @@ public class ReusableSpecifications {
     public static ResponseSpecBuilder respec;
     public static ResponseSpecification responseSpecification;
 
-    public static RequestSpecification getGenericRequestSpec() {
+    public static RequestSpecification authorizedRequestSpec() {
         rspec = new RequestSpecBuilder();
         PreemptiveOAuth2HeaderScheme oAuth2HeaderScheme = new PreemptiveOAuth2HeaderScheme();
         oAuth2HeaderScheme.setAccessToken(GO_REST_ACCESS_TOKEN);
@@ -30,9 +30,16 @@ public class ReusableSpecifications {
         return requestSpecification;
     }
 
-    public static ResponseSpecification getGenericResponseSpec() {
+    public static RequestSpecification unAuthorizedRequestSpec() {
+        rspec = new RequestSpecBuilder();
+        rspec.setContentType(ContentType.JSON);
+        requestSpecification = rspec.build();
+        return requestSpecification;
+    }
+
+    public static ResponseSpecification responseSpec() {
         respec = new ResponseSpecBuilder();
-        respec.expectHeader("Content-Type", "application/json; charset=utf-8");
+        respec.expectHeader("Content-Type", "application/json; charset=UTF-8");
         respec.expectResponseTime(lessThan(5L), TimeUnit.SECONDS);
         responseSpecification = respec.build();
 

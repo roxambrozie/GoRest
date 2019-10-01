@@ -1,4 +1,4 @@
-package services.gorest.pojo.node;
+package services.gorest.models.nodes;
 
 import com.fasterxml.jackson.annotation.*;
 import org.apache.commons.lang.builder.EqualsBuilder;

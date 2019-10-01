@@ -1,4 +1,4 @@
-package services.gorest.pojo.node;
+package services.gorest.models.nodes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @JsonPropertyOrder({
         "href"
 })
-public class Avatar {
+public class Self {
+
     @JsonProperty("href")
     private String href;
     @JsonIgnore
@@ -57,10 +58,10 @@ public class Avatar {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Avatar) == false) {
+        if ((other instanceof Self) == false) {
             return false;
         }
-        Avatar rhs = ((Avatar) other);
+        Self rhs = ((Self) other);
         return new EqualsBuilder().append(href, rhs.href).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 }

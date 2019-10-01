@@ -1,4 +1,4 @@
-package services.gorest.pojo.node;
+package services.gorest.models.nodes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,22 +14,48 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "href"
+        "self",
+        "edit",
+        "avatar"
 })
-public class Edit {
-    @JsonProperty("href")
-    private String href;
+public class Links {
+    @JsonProperty("self")
+    private Self self;
+    @JsonProperty("edit")
+    private Edit edit;
+    @JsonProperty("avatar")
+    private Avatar avatar;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("href")
-    public String getHref() {
-        return href;
+    @JsonProperty("self")
+    public Self getSelf() {
+        return self;
     }
 
-    @JsonProperty("href")
-    public void setHref(String href) {
-        this.href = href;
+    @JsonProperty("self")
+    public void setSelf(Self self) {
+        this.self = self;
+    }
+
+    @JsonProperty("edit")
+    public Edit getEdit() {
+        return edit;
+    }
+
+    @JsonProperty("edit")
+    public void setEdit(Edit edit) {
+        this.edit = edit;
+    }
+
+    @JsonProperty("avatar")
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    @JsonProperty("avatar")
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
 
     @Override
@@ -49,7 +75,7 @@ public class Edit {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(href).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(self).append(edit).append(avatar).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -57,11 +83,11 @@ public class Edit {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Edit) == false) {
+        if ((other instanceof Links) == false) {
             return false;
         }
-        Edit rhs = ((Edit) other);
-        return new EqualsBuilder().append(href, rhs.href).append(additionalProperties, rhs.additionalProperties).isEquals();
+        Links rhs = ((Links) other);
+        return new EqualsBuilder().append(self, rhs.self).append(edit, rhs.edit).append(avatar, rhs.avatar).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 
 

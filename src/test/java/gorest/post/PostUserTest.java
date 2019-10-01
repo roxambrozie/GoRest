@@ -5,14 +5,12 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import net.thucydides.core.annotations.WithTags;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import services.gorest.pojo.User;
-import services.gorest.pojo.responses.GetUserResponse;
-import services.gorest.steps.CommonSteps;
-import services.gorest.steps.DeleteUserSteps;
-import services.gorest.steps.PostUserSteps;
+import services.gorest.actions.user.CreateUser;
+import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.User;
+import services.gorest.validation.CommonValidations;
 import utils.methods.ReusableMethods;
 
 @RunWith(SerenityRunner.class)
@@ -23,29 +21,22 @@ import utils.methods.ReusableMethods;
 })
 public class PostUserTest {
 
-    private User user = new User();
+    @Steps
+    private CommonValidations commonValidations;
 
     @Steps
-    private CommonSteps commonSteps;
+    private CreateUser createUser;
 
     @Steps
-    private PostUserSteps postUserSteps;
-
-    @Steps
-    private DeleteUserSteps deleteUserSteps;
+    private DeleteUser deleteUser;
 
     @Steps
     private ReusableMethods reusableMethods;
 
-    @Before
-    public void createPrerequisites() {
-        user = commonSteps.createValidUserObject("email" + reusableMethods.generateRandomInt(10, 100) + "@email.com", "UserName", "Last", "male");
-    }
-
     @Test
-    public void createAndDeleteUserTest() {
-        Response response = postUserSteps.createNewUser(user);
-        commonSteps.validateResponseStatusCode(response, 201);
-        deleteUserSteps.deleteUserUsingId(response.as(GetUserResponse.class).getResult().getId());
+    public void createUserTest() {
+        User user = new User("email" + reusableMethods.generateRandomInt(10, 100) + "@email.com", "UserName", "Last", "male");
+        Response response = createUser.createNewUser(user);
+        commonValidations.validateResponseStatusCode(response, 201);
     }
 }

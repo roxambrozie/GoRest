@@ -1,4 +1,4 @@
-package services.gorest.pojo;
+package services.gorest.models;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import services.gorest.pojo.node.Links;
+import services.gorest.models.nodes.Links;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -56,6 +56,19 @@ public class User {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public User() {
+    }
+
+    public User(String email, String first_name, String last_name, String gender) {
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+    }
+
+    public User(String first_name, String last_name, String gender) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
     }
 
     @JsonProperty("id")

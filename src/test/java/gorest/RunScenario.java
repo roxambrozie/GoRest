@@ -1,4 +1,4 @@
-package gorest.smoketests;
+package gorest;
 
 import cucumber.api.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
