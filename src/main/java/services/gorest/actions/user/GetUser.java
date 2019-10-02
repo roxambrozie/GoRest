@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
+import services.gorest.models.responses.GetUserResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
 public class GetUser extends GoRestActions {
@@ -23,6 +24,8 @@ public class GetUser extends GoRestActions {
         return response;
     }
 
-
+    public Response getCreatedUser(Response response) {
+        return getUserUsingId(response.as(GetUserResponse.class).getResult().getId());
+    }
 
 }

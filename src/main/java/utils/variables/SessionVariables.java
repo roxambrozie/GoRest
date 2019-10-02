@@ -2,6 +2,8 @@ package utils.variables;
 
 public enum SessionVariables {
     VAR_RESPONSE("response"),
+    VAR_USER("user"),
+    VAR_USER_ID("id"),
     VAR_STATUS_CODE("code");
 
     private final String value;

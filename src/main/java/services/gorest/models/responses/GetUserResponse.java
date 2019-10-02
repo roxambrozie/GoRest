@@ -12,30 +12,20 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import services.gorest.models.User;
-import services.gorest.models.nodes._Meta;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "_meta",
         "result"
 })
-public class GetUserResponse {
-    @JsonProperty("_meta")
-    private _Meta _meta;
+public class GetUserResponse extends GeneralResponse {
+
     @JsonProperty("result")
     private User result;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("_meta")
-    public _Meta get_meta() {
-        return _meta;
-    }
 
-    @JsonProperty("_meta")
-    public void set_meta(_Meta _meta) {
-        this._meta = _meta;
-    }
 
     @JsonProperty("result")
     public User getResult() {
@@ -64,7 +54,7 @@ public class GetUserResponse {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(_meta).append(result).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(result).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -76,7 +66,7 @@ public class GetUserResponse {
             return false;
         }
         GetUserResponse rhs = ((GetUserResponse) other);
-        return new EqualsBuilder().append(_meta, rhs._meta).append(result, rhs.result).append(additionalProperties, rhs.additionalProperties).isEquals();
+        return new EqualsBuilder().append(result, rhs.result).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 
 

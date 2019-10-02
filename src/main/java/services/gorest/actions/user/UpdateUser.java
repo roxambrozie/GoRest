@@ -5,6 +5,7 @@ import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
 import services.gorest.models.User;
+import services.gorest.models.responses.GetUserResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
 public class UpdateUser extends GoRestActions {
@@ -25,11 +26,10 @@ public class UpdateUser extends GoRestActions {
         return response;
     }
 
-    @Step("When I update the last name of a user ")
-    public Response whenUpdateUserLastNameUsingId(int id,String last_name){
+    public Response whenUpdateUsersLastNameUsingId(Response response, String last_name) {
         User user = new User();
         user.setLastName(last_name);
-        return whenUpdateUserUsingId(id, user);
+        return whenUpdateUserUsingId(response.as(GetUserResponse.class).getResult().getId(), user);
     }
 
 }

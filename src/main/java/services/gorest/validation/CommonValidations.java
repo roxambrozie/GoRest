@@ -3,6 +3,7 @@ package services.gorest.validation;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Step;
 import org.junit.Assert;
+
 import services.gorest.models.responses.GetUserResponse;
 
 public class CommonValidations {

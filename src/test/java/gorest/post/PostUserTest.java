@@ -5,13 +5,18 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import net.thucydides.core.annotations.WithTags;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.User;
 import services.gorest.validation.CommonValidations;
-import utils.methods.ReusableMethods;
+
+import static utils.variables.SessionVariableManager.getSessionVariable;
+import static utils.variables.SessionVariableManager.setSessionVariable;
+import static utils.variables.SessionVariables.VAR_RESPONSE;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -20,6 +25,8 @@ import utils.methods.ReusableMethods;
         @WithTag(type = "type", name = "Regression")
 })
 public class PostUserTest {
+
+    private User myUser = new User();
 
     @Steps
     private CommonValidations commonValidations;
@@ -30,13 +37,23 @@ public class PostUserTest {
     @Steps
     private DeleteUser deleteUser;
 
-    @Steps
-    private ReusableMethods reusableMethods;
+    @Before
+    public void createPrereq() {
+        myUser.setEmail("email9hl@myemail.com");
+        myUser.setFirstName("Isaac");
+        myUser.setLastName("Asimov");
+        myUser.setGender("male");
+    }
 
     @Test
     public void createUserTest() {
-        User user = new User("email" + reusableMethods.generateRandomInt(10, 100) + "@email.com", "UserName", "Last", "male");
-        Response response = createUser.createNewUser(user);
+        Response response = createUser.createNewUser(myUser);
+        setSessionVariable(VAR_RESPONSE, response);
         commonValidations.validateResponseStatusCode(response, 201);
+    }
+
+    @After
+    public void tearDown() {
+        deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
     }
 }

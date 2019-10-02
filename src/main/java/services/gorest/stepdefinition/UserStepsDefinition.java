@@ -1,5 +1,7 @@
 package services.gorest.stepdefinition;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
@@ -10,13 +12,13 @@ import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.actions.user.GetUser;
 import services.gorest.actions.user.UpdateUser;
-import services.gorest.models.User;
+import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 import utils.methods.ReusableMethods;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_RESPONSE;
+import static utils.variables.SessionVariables.*;
 
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -43,22 +45,23 @@ public class UserStepsDefinition {
     @Steps
     private ReusableMethods reusableMethods;
 
-
-    @When("^I create a new user for the GoRest API with email (.*), first name (.*), last name (.*) and gender (.*)$")
+    @When("^I create a new user with email (.*), first name (.*), last name (.*) and gender (.*)$")
     public void whenCreateUser(String email, String firstName, String lastName, String gender) {
         Response response = createUser.whenCreateNewUser(email, firstName, lastName, gender);
-      //TODO  setSessionVariable();
+        setSessionVariable(VAR_USER, response.as(GetUserResponse.class).getResult());
+        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
         setSessionVariable(VAR_RESPONSE, response);
     }
+
 
     @Then("^I check that the status code from the response body is (.*)$")
     public void thenCheckStatusCodeFromResponseBody(int statusCode) {
         commonValidations.validateResponseStatusCode(getSessionVariable(VAR_RESPONSE), statusCode);
     }
 
-    @When("^I retrieve a single user based on id (.*)$")
-    public void whenGetUserById(int id) {
-        Response response = getUser.getUserUsingId(id);
+    @When("^I retrieve a single user based on id$")
+    public void whenGetUserById() {
+        Response response = getUser.getCreatedUser(getSessionVariable(VAR_RESPONSE));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
@@ -68,10 +71,18 @@ public class UserStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @When("^I update a single user based on id (.*) with the new (.*)$")
-    public void whenUpdateUserById(int id, String last_name) {
-        Response response = updateUser.whenUpdateUserLastNameUsingId(id, last_name);
+    @When("^I update a single user based on id with the new last name (.*)$")
+    public void whenUpdateUserById(String last_name) {
+        Response response = updateUser.whenUpdateUsersLastNameUsingId(getSessionVariable(VAR_RESPONSE), last_name);
         setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @After
+    public void doSomethingAfter(Scenario scenario) {
+        if (!scenario.getName().equals("Deleting a users details")) {
+
+            deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
+        }
     }
 
 }
