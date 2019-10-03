@@ -40,8 +40,8 @@ public class PostUserTest {
     @Before
     public void createPrereq() {
         myUser.setEmail("email9hl@myemail.com");
-        myUser.setFirstName("Isaac");
-        myUser.setLastName("Asimov");
+        myUser.setFirst_name("Isaac");
+        myUser.setLast_name("Asimov");
         myUser.setGender("male");
     }
 

@@ -28,7 +28,7 @@ public class UpdateUser extends GoRestActions {
 
     public Response whenUpdateUsersLastNameUsingId(Response response, String last_name) {
         User user = new User();
-        user.setLastName(last_name);
+        user.setLast_name(last_name);
         return whenUpdateUserUsingId(response.as(GetUserResponse.class).getResult().getId(), user);
     }
 

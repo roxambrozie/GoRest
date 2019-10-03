@@ -14,7 +14,6 @@ import services.gorest.actions.user.GetUser;
 import services.gorest.actions.user.UpdateUser;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
-import utils.methods.ReusableMethods;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
@@ -42,8 +41,6 @@ public class UserStepsDefinition {
     @Steps
     private CommonValidations commonValidations;
 
-    @Steps
-    private ReusableMethods reusableMethods;
 
     @When("^I create a new user with email (.*), first name (.*), last name (.*) and gender (.*)$")
     public void whenCreateUser(String email, String firstName, String lastName, String gender) {
