@@ -1,4 +1,4 @@
-package services.gorest.actions.user;
+package services.gorest.actions.post;
 
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
@@ -7,25 +7,25 @@ import services.gorest.actions.GoRestActions;
 import services.gorest.models.responses.GetPostResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
-public class GetUser extends GoRestActions {
+public class DeletePost extends GoRestActions {
 
-    private String GET_USER_URL = getBaseUri() + USERS_ENDPOINT;
+    private String DELETE_POST_URL = getBaseUri() + POSTS_ENDPOINT;
 
-    @Step("I retrieve a single user based on id {0}")
-    public Response getUserUsingId(int id) {
+    @Step("I delete a single post based on id {0}")
+    public Response deletePostUsingId(int id) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
-                .baseUri(GET_USER_URL)
+                .baseUri(DELETE_POST_URL)
                 .pathParam("id", id)
                 .when()
-                .get("/{id}");
+                .delete("/{id}");
         response.then().log().all().spec(ReusableSpecifications.responseSpec());
 
         return response;
     }
 
-    public Response getCreatedUser(Response response) {
-        return getUserUsingId(response.as(GetPostResponse.class).getResult().getId());
+    @Step("I delete a created post based on id")
+    public Response deleteCreatedPost(Response response) {
+        return deletePostUsingId(response.as(GetPostResponse.class).getResult().getId());
     }
-
 }

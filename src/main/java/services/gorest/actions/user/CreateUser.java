@@ -1,6 +1,5 @@
 package services.gorest.actions.user;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
@@ -17,7 +16,6 @@ public class CreateUser extends GoRestActions {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(POST_USER_URL)
-                .contentType(ContentType.JSON)
                 .when()
                 .body(user)
                 .post();

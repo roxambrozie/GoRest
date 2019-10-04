@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "success": true,
+    "code": 200,
+    "message": "OK. Everything worked as expected.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 59,
+      "reset": 1
+    }
+  },
+  "result": {
+    "id": "2716",
+    "user_id": "120",
+    "title": "Post in romana",
+    "body": "Post dragut.",
+    "_links": {
+      "self": {
+        "href": "https://gorest.co.in/public-api/posts/2716"
+      },
+      "edit": {
+        "href": "https://gorest.co.in/public-api/posts/2716"
+      }
+    }
+  }
+}

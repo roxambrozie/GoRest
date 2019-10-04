@@ -1,21 +1,22 @@
-package services.gorest.actions.user;
+package services.gorest.actions.post;
 
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
 import services.gorest.models.responses.GetPostResponse;
+import services.gorest.models.responses.GetUserResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
-public class GetUser extends GoRestActions {
+public class GetPost extends GoRestActions {
 
-    private String GET_USER_URL = getBaseUri() + USERS_ENDPOINT;
+    private String GET_POST_URL = getBaseUri() + POSTS_ENDPOINT;
 
-    @Step("I retrieve a single user based on id {0}")
-    public Response getUserUsingId(int id) {
+    @Step("I retrieve a single post based on id {0")
+    public Response getPostUsingId(int id) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
-                .baseUri(GET_USER_URL)
+                .baseUri(GET_POST_URL)
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");
@@ -24,8 +25,7 @@ public class GetUser extends GoRestActions {
         return response;
     }
 
-    public Response getCreatedUser(Response response) {
-        return getUserUsingId(response.as(GetPostResponse.class).getResult().getId());
+    public Response getCreatedPost(Response response) {
+        return getPostUsingId(response.as(GetPostResponse.class).getResult().getId());
     }
-
 }

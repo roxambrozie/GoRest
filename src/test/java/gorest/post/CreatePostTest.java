@@ -2,7 +2,6 @@ package gorest.post;
 
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Shared;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import net.thucydides.core.annotations.WithTags;
@@ -10,9 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import services.gorest.actions.user.CreateUser;
-import services.gorest.actions.user.DeleteUser;
-import services.gorest.models.User;
+import services.gorest.actions.post.CreatePost;
+import services.gorest.actions.post.DeletePost;
+import services.gorest.models.Post;
 import services.gorest.validation.CommonValidations;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
@@ -25,37 +24,35 @@ import static utils.variables.SessionVariables.VAR_RESPONSE;
         @WithTag(type = "type", name = "Smoke"),
         @WithTag(type = "type", name = "Regression")
 })
-public class PostUserTest {
+public class CreatePostTest {
 
-    private User myUser = new User();
+    private Post myPost = new Post();
 
     @Steps
     private CommonValidations commonValidations;
 
     @Steps
-    private CreateUser createUser;
+    private CreatePost createPost;
 
     @Steps
-    private DeleteUser deleteUser;
+    private DeletePost deletePost;
 
     @Before
-    public void createPrereq() {
-        myUser.setEmail("email9hl@myemail.com");
-        myUser.setFirst_name("Isaac");
-        myUser.setLast_name("Asimov");
-        myUser.setGender("male");
+    public void createPrereq(){
+        myPost.setUser_id(133);
+        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
+        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
 
-    @WithTag(type = "type", name = "User")
     @Test
-    public void createUserTest() {
-        Response response = createUser.createNewUser(myUser);
+    public void createPostTest(){
+        Response response = createPost.createNewPost(myPost);
         setSessionVariable(VAR_RESPONSE, response);
         commonValidations.validateResponseStatusCode(response, 201);
     }
 
     @After
     public void tearDown() {
-        deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
+        deletePost.deleteCreatedPost(getSessionVariable(VAR_RESPONSE));
     }
 }
