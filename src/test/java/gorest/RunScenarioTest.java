@@ -6,5 +6,5 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(glue = "", features = "src/test/resources/features")
-public class RunScenario {
+public class RunScenarioTest {
 }

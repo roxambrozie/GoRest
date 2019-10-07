@@ -56,21 +56,21 @@ public class UserStepsDefinition {
         commonValidations.validateResponseStatusCode(getSessionVariable(VAR_RESPONSE), statusCode);
     }
 
-    @When("^I retrieve a single user based on id$")
-    public void whenGetUserById() {
-        Response response = getUser.getCreatedUser(getSessionVariable(VAR_RESPONSE));
+    @When("^I retrieve a single user$")
+    public void whenGetUserFromResponse() {
+        Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I delete a single user based on id$")
     public void whenDeleteUserById() {
-        Response response = deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
+        Response response = deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @When("^I update a single user based on id with the new last name (.*)$")
-    public void whenUpdateUserById(String last_name) {
-        Response response = updateUser.whenUpdateUsersLastNameUsingId(getSessionVariable(VAR_RESPONSE), last_name);
+    @When("^I update a users last name to (.*)$")
+    public void whenUpdateUserById(String lastName) {
+        Response response = updateUser.whenUpdateUsersLastNameUsingId(getSessionVariable(VAR_USER_ID), lastName);
         setSessionVariable(VAR_RESPONSE, response);
     }
 
@@ -78,7 +78,7 @@ public class UserStepsDefinition {
     public void doSomethingAfter(Scenario scenario) {
         if (!scenario.getName().equals("Deleting a users details")) {
 
-            deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
+            deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         }
     }
 
