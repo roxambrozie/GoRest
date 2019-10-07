@@ -1,4 +1,4 @@
-@SMOKE
+@UserSmoke
 Feature: Smoke testing the users endpoints
 
   Background: Creating a user

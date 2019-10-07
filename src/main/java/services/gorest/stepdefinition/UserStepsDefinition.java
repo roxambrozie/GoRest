@@ -76,7 +76,7 @@ public class UserStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @After
+    @After("@UserSmoke")
     public void doSomethingAfter(Scenario scenario) {
         if (!scenario.getName().equals("Deleting a users details")) {
 

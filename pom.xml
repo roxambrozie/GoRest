@@ -138,23 +138,23 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.jsonschema2pojo</groupId>
-                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                <version>0.4.37</version>
-                <configuration>
-                    <sourceType>json</sourceType>
-                    <sourceDirectory>${basedir}/src/main/resources/schemas</sourceDirectory>
-                    <targetPackage>com.mypojo</targetPackage>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.jsonschema2pojo</groupId>-->
+                <!--<artifactId>jsonschema2pojo-maven-plugin</artifactId>-->
+                <!--<version>0.4.37</version>-->
+                <!--<configuration>-->
+                    <!--<sourceType>json</sourceType>-->
+                    <!--<sourceDirectory>${basedir}/src/main/resources/schemas</sourceDirectory>-->
+                    <!--<targetPackage>com.mypojo</targetPackage>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

@@ -2,7 +2,6 @@ package gorest.post;
 
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Shared;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import net.thucydides.core.annotations.WithTags;
@@ -23,7 +22,8 @@ import static utils.variables.SessionVariables.VAR_RESPONSE;
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
-        @WithTag(type = "type", name = "Regression")
+        @WithTag(type = "type", name = "Regression"),
+        @WithTag(type = "type", name = "User")
 })
 public class PostUserTest {
 
@@ -40,13 +40,12 @@ public class PostUserTest {
 
     @Before
     public void createPrereq() {
-        myUser.setEmail("email9hl@myemail.com");
+        myUser.setEmail("email@myemail.com");
         myUser.setFirst_name("Isaac");
         myUser.setLast_name("Asimov");
         myUser.setGender("male");
     }
 
-    @WithTag(type = "type", name = "User")
     @Test
     public void createUserTest() {
         Response response = createUser.createNewUser(myUser);

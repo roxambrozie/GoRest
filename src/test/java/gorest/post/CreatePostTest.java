@@ -22,7 +22,8 @@ import static utils.variables.SessionVariables.VAR_RESPONSE;
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
-        @WithTag(type = "type", name = "Regression")
+        @WithTag(type = "type", name = "Regression"),
+        @WithTag(type = "type", name = "Post")
 })
 public class CreatePostTest {
 

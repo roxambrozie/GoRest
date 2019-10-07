@@ -24,7 +24,7 @@ public class CreatePost extends GoRestActions {
         return response;
     }
 
-    @Step("When I am provided with user_id, title and text body")
+    @Step("When I am provided with the user id, title and text body")
     public Response whenCreateNewPost(int userId, String title, String body) {
         Post post = new Post(userId, title, body);
         return createNewPost(post);

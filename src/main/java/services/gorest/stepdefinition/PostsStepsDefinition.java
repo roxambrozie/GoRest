@@ -1,6 +1,8 @@
 package services.gorest.stepdefinition;
 
 
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
@@ -52,5 +54,13 @@ public class PostsStepsDefinition {
     public void whenUpdatePostById(int userId, String title) {
         Response response = updatePost.whenUpdatePostsTitleUsingId(getSessionVariable(VAR_RESPONSE), userId, title);
         setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @After("@PostSmoke")
+    public void doSomethingAfter(Scenario scenario) {
+        if (!scenario.getName().equals("Deleting a posts details")) {
+
+            deletePost.deleteCreatedPost(getSessionVariable(VAR_RESPONSE));
+        }
     }
 }

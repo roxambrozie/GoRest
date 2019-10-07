@@ -1,4 +1,4 @@
-@SMOKE
+@PostSmoke
 Feature: Smoke testing the posts endpoint
 
   Background: Creating a post
