@@ -12,10 +12,12 @@ import org.junit.runner.RunWith;
 import services.gorest.actions.post.CreatePost;
 import services.gorest.actions.post.DeletePost;
 import services.gorest.models.Post;
+import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
+import static utils.variables.SessionVariables.VAR_POST_ID;
 import static utils.variables.SessionVariables.VAR_RESPONSE;
 
 @RunWith(SerenityRunner.class)
@@ -39,21 +41,22 @@ public class CreatePostTest {
     private DeletePost deletePost;
 
     @Before
-    public void createPrereq(){
-        myPost.setUser_id(133);
+    public void createPrereq() {
+        myPost.setUser_id(1799);
         myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
         myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
 
     @Test
-    public void createPostTest(){
+    public void createPostTest() {
         Response response = createPost.createNewPost(myPost);
         setSessionVariable(VAR_RESPONSE, response);
+        setSessionVariable(VAR_POST_ID, response.as(GetUserResponse.class).getResult().getId());
         commonValidations.validateResponseStatusCode(response, 201);
     }
 
     @After
     public void tearDown() {
-        deletePost.deleteCreatedPost(getSessionVariable(VAR_RESPONSE));
+        deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
     }
 }

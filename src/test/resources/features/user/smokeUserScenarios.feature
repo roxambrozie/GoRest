@@ -8,7 +8,7 @@ Feature: Smoke testing the users endpoints
 
   Scenario: Getting a users details
 
-    When I retrieve a single user based on id
+    When I retrieve a single user
     Then I check that the status code from the response body is 200
 
 
@@ -20,7 +20,7 @@ Feature: Smoke testing the users endpoints
 
   Scenario: Updating a users details
 
-    When I update a single user based on id with the new last name Scottish
+    When I update a users last name to Scottish
     Then I check that the status code from the response body is 200
 
 

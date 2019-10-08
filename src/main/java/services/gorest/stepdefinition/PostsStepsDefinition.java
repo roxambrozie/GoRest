@@ -40,19 +40,19 @@ public class PostsStepsDefinition {
 
     @When("^I retrieve a single post based on id$")
     public void whenGetPostById() {
-        Response response = getPost.getCreatedPost(getSessionVariable(VAR_RESPONSE));
+        Response response = getPost.getPostById(getSessionVariable(VAR_POST_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I delete a single post based on id$")
     public void whenDeletePostById() {
-        Response response = deletePost.deleteCreatedPost(getSessionVariable(VAR_RESPONSE));
+        Response response = deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I update a single post using my user id (.*) with the new title (.*)$")
     public void whenUpdatePostById(int userId, String title) {
-        Response response = updatePost.whenUpdatePostsTitleUsingId(getSessionVariable(VAR_RESPONSE), userId, title);
+        Response response = updatePost.whenUpdatePostsTitleUsingId(getSessionVariable(VAR_POST_ID), userId, title);
         setSessionVariable(VAR_RESPONSE, response);
     }
 
@@ -60,7 +60,7 @@ public class PostsStepsDefinition {
     public void doSomethingAfter(Scenario scenario) {
         if (!scenario.getName().equals("Deleting a posts details")) {
 
-            deletePost.deleteCreatedPost(getSessionVariable(VAR_RESPONSE));
+            deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
         }
     }
 }

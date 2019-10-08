@@ -5,8 +5,6 @@ import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
 import services.gorest.models.Post;
-import services.gorest.models.responses.GetPostResponse;
-import services.gorest.models.responses.GetUserResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
 public class UpdatePost extends GoRestActions {
@@ -27,11 +25,11 @@ public class UpdatePost extends GoRestActions {
         return response;
     }
 
-    public Response whenUpdatePostsTitleUsingId(Response response, int userId, String title) {
+    public Response whenUpdatePostsTitleUsingId(int postId, int userId, String title) {
         Post post = new Post();
         post.setUser_id(userId);
         post.setTitle(title);
-        return whenUpdatePostUsingId(response.as(GetPostResponse.class).getResult().getId(), post);
+        return whenUpdatePostUsingId(postId, post);
     }
 
 }

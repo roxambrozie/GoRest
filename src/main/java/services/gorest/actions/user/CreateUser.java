@@ -24,7 +24,7 @@ public class CreateUser extends GoRestActions {
         return response;
     }
 
-    @Step("When I am provided with email, first name, last name and gender")
+    @Step("When I create an user with email, first name, last name and gender")
     public Response whenCreateNewUser(String email, String firstName, String lastName, String gender) {
         User user = new User(email, firstName, lastName, gender);
         return createNewUser(user);

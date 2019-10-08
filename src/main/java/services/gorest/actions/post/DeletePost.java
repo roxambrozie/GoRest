@@ -4,7 +4,6 @@ import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
-import services.gorest.models.responses.GetPostResponse;
 import utils.reusable.specifications.ReusableSpecifications;
 
 public class DeletePost extends GoRestActions {
@@ -24,8 +23,4 @@ public class DeletePost extends GoRestActions {
         return response;
     }
 
-    @Step("I delete a created post based on id")
-    public Response deleteCreatedPost(Response response) {
-        return deletePostUsingId(response.as(GetPostResponse.class).getResult().getId());
-    }
 }

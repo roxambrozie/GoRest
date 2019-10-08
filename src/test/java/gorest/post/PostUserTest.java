@@ -12,18 +12,19 @@ import org.junit.runner.RunWith;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.User;
+import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.VAR_RESPONSE;
+import static utils.variables.SessionVariables.VAR_USER_ID;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
-        @WithTag(type = "type", name = "Regression"),
-        @WithTag(type = "type", name = "User")
+        @WithTag(type = "type", name = "Regression")
 })
 public class PostUserTest {
 
@@ -40,7 +41,7 @@ public class PostUserTest {
 
     @Before
     public void createPrereq() {
-        myUser.setEmail("email@myemail.com");
+        myUser.setEmail("email9hl@myemail.com");
         myUser.setFirst_name("Isaac");
         myUser.setLast_name("Asimov");
         myUser.setGender("male");
@@ -50,11 +51,12 @@ public class PostUserTest {
     public void createUserTest() {
         Response response = createUser.createNewUser(myUser);
         setSessionVariable(VAR_RESPONSE, response);
+        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
         commonValidations.validateResponseStatusCode(response, 201);
     }
 
     @After
     public void tearDown() {
-        deleteUser.deleteCreatedUser(getSessionVariable(VAR_RESPONSE));
+        deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
     }
 }
