@@ -23,7 +23,7 @@ import java.util.Map;
 @Data
 public class Post {
     @JsonProperty("id")
-    private int id;
+    private String id;
     @JsonProperty("user_id")
     private int user_id;
     @JsonProperty("title")

@@ -19,7 +19,7 @@ public class CreateUser extends GoRestActions {
                 .when()
                 .body(user)
                 .post();
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }

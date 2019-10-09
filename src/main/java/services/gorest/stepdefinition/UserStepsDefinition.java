@@ -56,14 +56,20 @@ public class UserStepsDefinition {
         commonValidations.validateResponseStatusCode(getSessionVariable(VAR_RESPONSE), statusCode);
     }
 
-    @When("^I retrieve a single user$")
-    public void whenGetUserFromResponse() {
+    @When("^I retrieve a single user with the id: (.*)$")
+    public void whenGetUserFromResponse(String userId) {
+        if (userId.equalsIgnoreCase("as expected")) {
+            userId = getSessionVariable(VAR_USER_ID);
+        }
         Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @When("^I delete a single user based on id$")
-    public void whenDeleteUserById() {
+    @When("^I delete a single user based on id: (.*)$")
+    public void whenDeleteUserById(String userId) {
+        if (userId.equalsIgnoreCase("as expected")) {
+            userId = getSessionVariable(VAR_USER_ID);
+        }
         Response response = deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
@@ -75,7 +81,7 @@ public class UserStepsDefinition {
     }
 
     @After("@UserSmoke")
-    public void doSomethingAfter(Scenario scenario) {
+    public void tearDownDeleteUser(Scenario scenario) {
         if (!scenario.getName().equals("Deleting a users details")) {
 
             deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));

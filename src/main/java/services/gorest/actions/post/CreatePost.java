@@ -19,7 +19,7 @@ public class CreatePost extends GoRestActions {
                 .when()
                 .body(post)
                 .post();
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }

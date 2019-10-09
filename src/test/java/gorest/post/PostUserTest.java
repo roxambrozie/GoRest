@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.actions.user.GetUser;
 import services.gorest.models.User;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
@@ -39,6 +40,9 @@ public class PostUserTest {
     @Steps
     private DeleteUser deleteUser;
 
+    @Steps
+    private GetUser getUser;
+
     @Before
     public void createPrereq() {
         myUser.setEmail("email9hl@myemail.com");
@@ -50,13 +54,14 @@ public class PostUserTest {
     @Test
     public void createUserTest() {
         Response response = createUser.createNewUser(myUser);
+        commonValidations.validateResponseStatusCode(response, 201);
         setSessionVariable(VAR_RESPONSE, response);
         setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
-        commonValidations.validateResponseStatusCode(response, 201);
     }
 
     @After
     public void tearDown() {
+        getUser.getUserById(getSessionVariable(VAR_USER_ID));
         deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
     }
 }

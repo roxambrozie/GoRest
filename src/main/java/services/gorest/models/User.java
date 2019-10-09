@@ -29,7 +29,7 @@ import java.util.Map;
 public class User {
 
     @JsonProperty("id")
-    private int id;
+    private String id;
     @JsonProperty("first_name")
     private String first_name;
     @JsonProperty("last_name")

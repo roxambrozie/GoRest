@@ -12,7 +12,7 @@ public class UpdateUser extends GoRestActions {
     private String UPDATE_USER_URL = getBaseUri() + USERS_ENDPOINT;
 
     @Step("When I update a single user based on id {0}")
-    public Response whenUpdateUserUsingId(int id, User user) {
+    public Response whenUpdateUserUsingId(String id, User user) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(UPDATE_USER_URL)
@@ -20,12 +20,12 @@ public class UpdateUser extends GoRestActions {
                 .body(user)
                 .when()
                 .patch("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log();
 
         return response;
     }
 
-    public Response whenUpdateUsersLastNameUsingId(int id, String last_name) {
+    public Response whenUpdateUsersLastNameUsingId(String id, String last_name) {
         User user = new User();
         user.setLast_name(last_name);
         return whenUpdateUserUsingId(id, user);
