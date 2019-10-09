@@ -9,54 +9,54 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import services.gorest.actions.post.CreatePost;
-import services.gorest.actions.post.DeletePost;
-import services.gorest.models.Post;
+import services.gorest.actions.user.CreateUser;
+import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_POST_ID;
 import static utils.variables.SessionVariables.VAR_RESPONSE;
+import static utils.variables.SessionVariables.VAR_USER_ID;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
-        @WithTag(type = "type", name = "Regression"),
-        @WithTag(type = "type", name = "Post")
+        @WithTag(type = "type", name = "Regression")
 })
-public class CreatePostTest {
+public class CreateUserTest {
 
-    private Post myPost = new Post();
+    private User myUser = new User();
 
     @Steps
     private CommonValidations commonValidations;
 
     @Steps
-    private CreatePost createPost;
+    private CreateUser createUser;
 
     @Steps
-    private DeletePost deletePost;
+    private DeleteUser deleteUser;
 
     @Before
     public void createPrereq() {
-        myPost.setUser_id(179);
-        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
-        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
+        myUser.setEmail("email9hl@myemail.com");
+        myUser.setFirst_name("Isaac");
+        myUser.setLast_name("Asimov");
+        myUser.setGender("male");
     }
 
     @Test
-    public void createPostTest() {
-        Response response = createPost.createNewPost(myPost);
+    public void createUserTest() {
+        Response response = createUser.createNewUser(myUser);
         setSessionVariable(VAR_RESPONSE, response);
-        setSessionVariable(VAR_POST_ID, response.as(GetUserResponse.class).getResult().getId());
+        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
         commonValidations.validateResponseStatusCode(response, 201);
     }
 
     @After
     public void tearDown() {
-        deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
+        deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
     }
 }
