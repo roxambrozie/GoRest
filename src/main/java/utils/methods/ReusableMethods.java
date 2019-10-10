@@ -1,6 +1,11 @@
 package utils.methods;
 
+import utils.variables.SessionVariables;
+
 import java.util.Random;
+
+import static utils.variables.SessionVariableManager.getSessionVariable;
+import static utils.variables.SessionVariables.VAR_USER_ID;
 
 public class ReusableMethods {
 
@@ -13,6 +18,13 @@ public class ReusableMethods {
         Random random = new Random();
         int randomInt = random.nextInt();
         return Integer.toString(randomInt);
+    }
+
+    public String setSessionVariableAsExpected(String expectedString, SessionVariables sessionVariable) {
+        if (expectedString.equalsIgnoreCase("as expected")) {
+            expectedString = getSessionVariable(sessionVariable);
+        }
+        return expectedString;
     }
 
 }

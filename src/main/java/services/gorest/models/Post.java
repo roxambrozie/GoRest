@@ -25,7 +25,7 @@ public class Post {
     @JsonProperty("id")
     private String id;
     @JsonProperty("user_id")
-    private int user_id;
+    private int userId;
     @JsonProperty("title")
     private String title;
     @JsonProperty("body")
@@ -35,8 +35,8 @@ public class Post {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Post(int user_id, String title, String body) {
-        this.user_id = user_id;
+    public Post(int userId, String title, String body) {
+        this.userId = userId;
         this.title = title;
         this.body = body;
     }

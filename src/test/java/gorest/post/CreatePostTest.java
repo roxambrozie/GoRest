@@ -13,12 +13,13 @@ import services.gorest.actions.post.CreatePost;
 import services.gorest.actions.post.DeletePost;
 import services.gorest.actions.post.GetPost;
 import services.gorest.models.Post;
-import services.gorest.models.responses.GetUserResponse;
+import services.gorest.models.responses.GetPostResponse;
 import services.gorest.validation.CommonValidations;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.*;
+import static utils.variables.SessionVariables.VAR_POST_ID;
+import static utils.variables.SessionVariables.VAR_RESPONSE;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -45,7 +46,7 @@ public class CreatePostTest {
 
     @Before
     public void createPrereq() {
-        myPost.setUser_id(179);
+        myPost.setUserId(179);
         myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
         myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
@@ -55,7 +56,7 @@ public class CreatePostTest {
         Response response = createPost.createNewPost(myPost);
         commonValidations.validateResponseStatusCode(response, 201);
         setSessionVariable(VAR_RESPONSE, response);
-        setSessionVariable(VAR_POST_ID, response.as(GetUserResponse.class).getResult().getId());
+        setSessionVariable(VAR_POST_ID, response.as(GetPostResponse.class).getResult().getId());
     }
 
     @After

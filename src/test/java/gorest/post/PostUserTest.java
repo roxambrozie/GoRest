@@ -45,9 +45,9 @@ public class PostUserTest {
 
     @Before
     public void createPrereq() {
-        myUser.setEmail("email9hl@myemail.com");
-        myUser.setFirst_name("Isaac");
-        myUser.setLast_name("Asimov");
+        myUser.setEmail("emaisld9hl@myemail.com");
+        myUser.setFirstName("Isaac");
+        myUser.setLastName("Asimov");
         myUser.setGender("male");
     }
 
@@ -64,4 +64,5 @@ public class PostUserTest {
         getUser.getUserById(getSessionVariable(VAR_USER_ID));
         deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
     }
+
 }

@@ -9,6 +9,6 @@ public class CommonValidations {
 
     @Step("Then I check the status code of the response is {1}")
     public void validateResponseStatusCode(Response response, int statusCode) {
-      Assert.assertEquals(statusCode,response.as(GeneralResponse.class).get_meta().getCode());
+        Assert.assertEquals(statusCode, response.as(GeneralResponse.class).get_meta().getCode());
     }
 }

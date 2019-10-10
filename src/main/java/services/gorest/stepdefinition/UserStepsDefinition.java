@@ -14,6 +14,7 @@ import services.gorest.actions.user.GetUser;
 import services.gorest.actions.user.UpdateUser;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import utils.methods.ReusableMethods;
 
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
@@ -41,6 +42,9 @@ public class UserStepsDefinition {
     @Steps
     private CommonValidations commonValidations;
 
+    @Steps
+    private ReusableMethods reusableMethods;
+
 
     @When("^I create a new user with email (.*), first name (.*), last name (.*) and gender (.*)$")
     public void whenCreateUser(String email, String firstName, String lastName, String gender) {
@@ -50,7 +54,6 @@ public class UserStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-
     @Then("^I check that the status code from the response body is (.*)$")
     public void thenCheckStatusCodeFromResponseBody(int statusCode) {
         commonValidations.validateResponseStatusCode(getSessionVariable(VAR_RESPONSE), statusCode);
@@ -58,33 +61,40 @@ public class UserStepsDefinition {
 
     @When("^I retrieve a single user with the id: (.*)$")
     public void whenGetUserFromResponse(String userId) {
-        if (userId.equalsIgnoreCase("as expected")) {
-            userId = getSessionVariable(VAR_USER_ID);
-        }
+        reusableMethods.setSessionVariableAsExpected(userId, VAR_USER_ID);
         Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I delete a single user based on id: (.*)$")
     public void whenDeleteUserById(String userId) {
-        if (userId.equalsIgnoreCase("as expected")) {
-            userId = getSessionVariable(VAR_USER_ID);
-        }
+        reusableMethods.setSessionVariableAsExpected(userId, VAR_USER_ID);
         Response response = deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @When("^I update a users last name to (.*)$")
-    public void whenUpdateUserById(String lastName) {
+    @When("^I update the user with id (.*) with the new last name (.*)$")
+    public void whenUpdateUserById(String userId, String lastName) {
+        reusableMethods.setSessionVariableAsExpected(userId, VAR_USER_ID);
         Response response = updateUser.whenUpdateUsersLastNameUsingId(getSessionVariable(VAR_USER_ID), lastName);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with first name (.*), last name (.*), email (.*), status (.*) and gender (.*)$")
+    public void whenUpdateAllUsersDetailsById(String userId, String firstName, String lastName, String email, String status, String gender) {
+        reusableMethods.setSessionVariableAsExpected(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateAllUserDetailsById(getSessionVariable(VAR_USER_ID), firstName, lastName, email, status, gender);
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @After("@UserSmoke")
     public void tearDownDeleteUser(Scenario scenario) {
         if (!scenario.getName().equals("Deleting a users details")) {
-
-            deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+            if (getSessionVariable(VAR_USER_ID) != null) {
+                deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+            } else {
+                System.err.println("The user does not exist so it cannot be deleted.");
+            }
         }
     }
 

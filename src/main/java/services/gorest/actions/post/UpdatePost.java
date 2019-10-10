@@ -27,7 +27,7 @@ public class UpdatePost extends GoRestActions {
 
     public Response whenUpdatePostsTitleUsingId(String postId, int userId, String title) {
         Post post = new Post();
-        post.setUser_id(userId);
+        post.setUserId(userId);
         post.setTitle(title);
         return whenUpdatePostUsingId(postId, post);
     }

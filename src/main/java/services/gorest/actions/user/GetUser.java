@@ -22,5 +22,4 @@ public class GetUser extends GoRestActions {
 
         return response;
     }
-
 }
