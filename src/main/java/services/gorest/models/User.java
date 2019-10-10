@@ -12,7 +12,7 @@ import java.util.Map;
 @JsonPropertyOrder({
         "id",
         "first_name",
-        "lastName",
+        "last_name",
         "gender",
         "dob",
         "email",
@@ -53,16 +53,16 @@ public class User {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public User(String email, String firstName, String last_name, String gender) {
+    public User(String email, String firstName, String lastName, String gender) {
         this.email = email;
         this.firstName = firstName;
-        this.lastName = last_name;
+        this.lastName = lastName;
         this.gender = gender;
     }
 
-    public User(String firstName, String last_name, String gender) {
+    public User(String firstName, String lastName, String gender) {
         this.firstName = firstName;
-        this.lastName = last_name;
+        this.lastName = lastName;
         this.gender = gender;
     }
 

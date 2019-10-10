@@ -39,16 +39,16 @@ public class UpdateUser extends GoRestActions {
         return response;
     }
 
-    public Response whenUpdateUsersLastNameUsingId(String id, String last_name) {
+    public Response whenUpdateUsersLastNameUsingId(String id, String lastName) {
         User user = new User();
-        user.setLastName(last_name);
+        user.setLastName(lastName);
         return whenUpdateUserDetailById(id, user);
     }
 
-    public Response whenUpdateAllUserDetailsById(String id,String firstName, String last_name, String email, String status, String gender) {
+    public Response whenUpdateAllUserDetailsById(String id,String firstName, String lastName, String email, String status, String gender) {
         User user = new User();
         user.setFirstName(firstName);
-        user.setLastName(last_name);
+        user.setLastName(lastName);
         user.setEmail(email);
         user.setGender(gender);
         user.setStatus(status);
