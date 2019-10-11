@@ -19,7 +19,7 @@ public class ReusableMethods {
         return Integer.toString(randomInt);
     }
 
-    public static String setExpectedStringValueFromSessionVariable(String expectedString, SessionVariables sessionVariable) {
+    public static String replaceExpectedWithVariable(String expectedString, SessionVariables sessionVariable) {
         if (expectedString.equalsIgnoreCase("as expected")) {
             expectedString = getSessionVariable(sessionVariable);
         }

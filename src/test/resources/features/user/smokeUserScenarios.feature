@@ -2,7 +2,7 @@
 Feature: Smoke testing the users endpoints
 
   Background: Creating a user
-    When I create a new user with email d.doe@email.com, first name Dan, last name Smith and gender male
+    When I create a new user with email d.doe1@email.com, first name Dan, last name Smith and gender male
     Then I check that the status code from the response body is 201
 
 

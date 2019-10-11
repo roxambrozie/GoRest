@@ -13,7 +13,7 @@ import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 import utils.methods.ReusableMethods;
 
-import static utils.methods.ReusableMethods.setExpectedStringValueFromSessionVariable;
+import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.*;
@@ -51,28 +51,28 @@ public class UserStepsDefinition {
 
     @When("^I retrieve a single user with the id: (.*)$")
     public void whenGetUserFromResponse(String userId) {
-        setExpectedStringValueFromSessionVariable(userId, VAR_USER_ID);
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I delete a single user based on id: (.*)$")
     public void whenDeleteUserById(String userId) {
-        setExpectedStringValueFromSessionVariable(userId, VAR_USER_ID);
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         Response response = deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I update the user with id (.*) with the new last name (.*)$")
     public void whenUpdateUserById(String userId, String lastName) {
-        setExpectedStringValueFromSessionVariable(userId, VAR_USER_ID);
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         Response response = updateUser.whenUpdateUsersLastNameUsingId(getSessionVariable(VAR_USER_ID), lastName);
         setSessionVariable(VAR_RESPONSE, response);
     }
 
     @When("^I update the user with id (.*) with first name (.*), last name (.*), email (.*), status (.*) and gender (.*)$")
     public void whenUpdateAllUsersDetailsById(String userId, String firstName, String lastName, String email, String status, String gender) {
-        setExpectedStringValueFromSessionVariable(userId, VAR_USER_ID);
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         Response response = updateUser.whenUpdateAllUserDetailsById(getSessionVariable(VAR_USER_ID), firstName, lastName, email, status, gender);
         setSessionVariable(VAR_RESPONSE, response);
     }

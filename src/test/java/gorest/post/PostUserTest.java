@@ -16,6 +16,8 @@ import services.gorest.models.User;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
+import static utils.methods.ReusableMethods.generateRandomInt;
+
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -41,7 +43,10 @@ public class PostUserTest {
 
     @Before
     public void createPrereq() {
-        myUser = createUser.whenCreateRandomUserObject();
+        myUser.setFirstName("Isaac");
+        myUser.setLastName("Asimov");
+        myUser.setGender("male");
+        myUser.setEmail(generateRandomInt(100,100000) + "@email.com");
     }
 
     @Test

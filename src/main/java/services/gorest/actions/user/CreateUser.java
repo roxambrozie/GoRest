@@ -33,10 +33,10 @@ public class CreateUser extends GoRestActions {
     }
 
     @Step("When I create a random user with the mandatory fields")
-    public User whenCreateRandomUserObject() {
+    public Response whenCreateRandomUserObject() {
         String email = "email" + generateRandomInt(100, 10000) + "@email.com";
         User user = new User(email, "John", "Doe", "male");
 
-        return user;
+        return createNewUser(user);
     }
 }

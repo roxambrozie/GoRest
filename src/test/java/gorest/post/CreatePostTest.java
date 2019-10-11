@@ -55,6 +55,7 @@ public class CreatePostTest {
         postId = response.as(GetPostResponse.class).getResult().getId();
     }
 
+
     @After
     public void tearDown() {
         Response response = getPost.getPostById(postId);
