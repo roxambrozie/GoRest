@@ -10,19 +10,19 @@ Feature: Smoke testing the posts endpoint
     Then I check that the status code from the response body is 201
 
 
-  Scenario: Getting a posts details
+  Scenario: Getting post details
 
     When I retrieve a single post based on the id: as expected
     Then I check that the status code from the response body is 200
 
 
-  Scenario: Deleting a posts details
+  Scenario: Deleting post details
 
     When I delete a single post based on the id: as expected
     Then I check that the status code from the response body is 204
 
 
-  Scenario: Updating a posts details
+  Scenario: Updating post details
 
     When I update a single post using my user id as expected with the new title Electric Aircraft
     Then I check that the status code from the response body is 200

@@ -5,13 +5,13 @@ import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import services.gorest.actions.GoRestActions;
 import services.gorest.models.User;
-import utils.methods.ReusableMethods;
 import utils.reusable.specifications.ReusableSpecifications;
+
+import static utils.methods.ReusableMethods.generateRandomInt;
 
 public class CreateUser extends GoRestActions {
 
     private String POST_USER_URL = getBaseUri() + USERS_ENDPOINT;
-    ReusableMethods reusableMethods = new ReusableMethods();
 
     @Step("I create a new user")
     public Response createNewUser(User user) {
@@ -33,10 +33,10 @@ public class CreateUser extends GoRestActions {
     }
 
     @Step("When I create a random user with the mandatory fields")
-    public Response whenCreateRandomUser() {
-        String email = "email" + reusableMethods.generateRandomInt(100, 1000) + "@email.com";
-        User user = new User(email, "RandomName", "RandomLastName", "male");
+    public User whenCreateRandomUserObject() {
+        String email = "email" + generateRandomInt(100, 10000) + "@email.com";
+        User user = new User(email, "John", "Doe", "male");
 
-        return createNewUser(user);
+        return user;
     }
 }

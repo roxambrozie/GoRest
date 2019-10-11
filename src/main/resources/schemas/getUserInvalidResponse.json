@@ -1,0 +1,18 @@
+{
+  "_meta": {
+    "success": false,
+    "code": 404,
+    "message": "The requested resource does not exist.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 59,
+      "reset": 1
+    }
+  },
+  "result": {
+    "name": "Not Found",
+    "message": "Object not found: 120333",
+    "code": 0,
+    "status": 404
+  }
+}

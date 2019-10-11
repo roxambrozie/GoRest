@@ -14,13 +14,9 @@ import static utils.constants.TestConstants.GO_REST_ACCESS_TOKEN;
 
 public class ReusableSpecifications {
 
-    public static RequestSpecBuilder rspec;
-    public static RequestSpecification requestSpecification;
-
-    public static ResponseSpecBuilder respec;
-    public static ResponseSpecification responseSpecification;
-
     public static RequestSpecification authorizedRequestSpec() {
+        RequestSpecBuilder rspec;
+        RequestSpecification requestSpecification;
         rspec = new RequestSpecBuilder();
         PreemptiveOAuth2HeaderScheme oAuth2HeaderScheme = new PreemptiveOAuth2HeaderScheme();
         oAuth2HeaderScheme.setAccessToken(GO_REST_ACCESS_TOKEN);
@@ -31,6 +27,8 @@ public class ReusableSpecifications {
     }
 
     public static RequestSpecification unAuthorizedRequestSpec() {
+        RequestSpecBuilder rspec;
+        RequestSpecification requestSpecification;
         rspec = new RequestSpecBuilder();
         rspec.setContentType(ContentType.JSON);
         requestSpecification = rspec.build();
@@ -38,6 +36,8 @@ public class ReusableSpecifications {
     }
 
     public static ResponseSpecification responseSpec() {
+        ResponseSpecBuilder respec;
+        ResponseSpecification responseSpecification;
         respec = new ResponseSpecBuilder();
         respec.expectHeader("Content-Type", "application/json; charset=UTF-8");
         respec.expectResponseTime(lessThan(5L), TimeUnit.SECONDS);

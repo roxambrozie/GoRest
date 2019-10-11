@@ -16,11 +16,6 @@ import services.gorest.models.Post;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.validation.CommonValidations;
 
-import static utils.variables.SessionVariableManager.getSessionVariable;
-import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_POST_ID;
-import static utils.variables.SessionVariables.VAR_RESPONSE;
-
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -31,6 +26,7 @@ import static utils.variables.SessionVariables.VAR_RESPONSE;
 public class CreatePostTest {
 
     private Post myPost = new Post();
+    private String postId;
 
     @Steps
     private CommonValidations commonValidations;
@@ -46,7 +42,8 @@ public class CreatePostTest {
 
     @Before
     public void createPrereq() {
-        myPost.setUserId(179);
+        //TODO create a way to switch between adding a new user and adding a post from an existing user
+        myPost.setUserId(2202);
         myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
         myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
@@ -55,13 +52,13 @@ public class CreatePostTest {
     public void createPostTest() {
         Response response = createPost.createNewPost(myPost);
         commonValidations.validateResponseStatusCode(response, 201);
-        setSessionVariable(VAR_RESPONSE, response);
-        setSessionVariable(VAR_POST_ID, response.as(GetPostResponse.class).getResult().getId());
+        postId = response.as(GetPostResponse.class).getResult().getId();
     }
 
     @After
     public void tearDown() {
-        getPost.getPostById(getSessionVariable(VAR_POST_ID));
-        deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
+        Response response = getPost.getPostById(postId);
+        commonValidations.validateResponseStatusCode(response, 200);
+        deletePost.deletePostUsingId(postId);
     }
 }
