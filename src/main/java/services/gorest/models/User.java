@@ -29,11 +29,11 @@ import java.util.Map;
 public class User {
 
     @JsonProperty("id")
-    private int id;
+    private String id;
     @JsonProperty("first_name")
-    private String first_name;
+    private String firstName;
     @JsonProperty("last_name")
-    private String last_name;
+    private String lastName;
     @JsonProperty("gender")
     private String gender;
     @JsonProperty("dob")
@@ -53,16 +53,16 @@ public class User {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public User(String email, String first_name, String last_name, String gender) {
+    public User(String email, String firstName, String lastName, String gender) {
         this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
     }
 
-    public User(String first_name, String last_name, String gender) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public User(String firstName, String lastName, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
     }
 

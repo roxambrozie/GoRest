@@ -12,7 +12,7 @@ public class UpdateUser extends GoRestActions {
     private String UPDATE_USER_URL = getBaseUri() + USERS_ENDPOINT;
 
     @Step("When I update a single user based on id {0}")
-    public Response whenUpdateUserUsingId(int id, User user) {
+    public Response whenUpdateUserDetailById(String id, User user) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(UPDATE_USER_URL)
@@ -20,15 +20,40 @@ public class UpdateUser extends GoRestActions {
                 .body(user)
                 .when()
                 .patch("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log();
 
         return response;
     }
 
-    public Response whenUpdateUsersLastNameUsingId(int id, String last_name) {
+    @Step("When I update a single user based on id {0} with all details")
+    public Response whenUpdateAllUserDetailsById(String id, User user) {
+        Response response = SerenityRest.rest().given().log().all()
+                .spec(ReusableSpecifications.authorizedRequestSpec())
+                .baseUri(UPDATE_USER_URL)
+                .pathParam("id", id)
+                .body(user)
+                .when()
+                .put("/{id}");
+        response.then().log();
+
+        return response;
+    }
+
+    public Response whenUpdateUsersLastNameUsingId(String id, String lastName) {
         User user = new User();
-        user.setLast_name(last_name);
-        return whenUpdateUserUsingId(id, user);
+        user.setLastName(lastName);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateAllUserDetailsById(String id,String firstName, String lastName, String email, String status, String gender) {
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setGender(gender);
+        user.setStatus(status);
+
+        return whenUpdateAllUserDetailsById(id, user);
     }
 
 }

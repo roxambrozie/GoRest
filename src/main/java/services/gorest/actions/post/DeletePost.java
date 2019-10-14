@@ -11,14 +11,14 @@ public class DeletePost extends GoRestActions {
     private String DELETE_POST_URL = getBaseUri() + POSTS_ENDPOINT;
 
     @Step("I delete a single post based on id {0}")
-    public Response deletePostUsingId(int id) {
+    public Response deletePostUsingId(String id) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(DELETE_POST_URL)
                 .pathParam("id", id)
                 .when()
                 .delete("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }

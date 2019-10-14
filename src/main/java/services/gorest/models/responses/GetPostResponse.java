@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import services.gorest.models.Post;
+import services.gorest.models.nodes._Meta;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,10 @@ import java.util.Map;
 })
 @NoArgsConstructor
 @Data
-public class GetPostResponse extends GeneralResponse {
+public class GetPostResponse {
 
+    @JsonProperty
+    private _Meta _meta;
     @JsonProperty("result")
     private Post result;
     @JsonIgnore

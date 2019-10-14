@@ -22,7 +22,7 @@ public class Comment {
     @JsonProperty("id")
     private String id;
     @JsonProperty("post_id")
-    private int post_id;
+    private String postId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("email")
@@ -32,8 +32,8 @@ public class Comment {
     @JsonProperty("_links")
     private Links links;
 
-    public Comment(int post_id, String name, String email, String body) {
-        this.post_id = post_id;
+    public Comment(String postId, String name, String email, String body) {
+        this.postId = postId;
         this.name = name;
         this.email = email;
         this.body = body;

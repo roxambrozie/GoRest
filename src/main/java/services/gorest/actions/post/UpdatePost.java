@@ -12,7 +12,7 @@ public class UpdatePost extends GoRestActions {
     private String UPDATE_POST_URL = getBaseUri() + POSTS_ENDPOINT;
 
     @Step("When I update a post based on id {0}")
-    public Response whenUpdatePostUsingId(int id, Post post) {
+    public Response whenUpdatePostUsingId(String id, Post post) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(UPDATE_POST_URL)
@@ -20,14 +20,14 @@ public class UpdatePost extends GoRestActions {
                 .body(post)
                 .when()
                 .patch("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }
 
-    public Response whenUpdatePostsTitleUsingId(int postId, int userId, String title) {
+    public Response whenUpdatePostsTitleUsingId(String postId, int userId, String title) {
         Post post = new Post();
-        post.setUser_id(userId);
+        post.setUserId(userId);
         post.setTitle(title);
         return whenUpdatePostUsingId(postId, post);
     }

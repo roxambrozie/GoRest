@@ -1,6 +1,6 @@
 package services.gorest.models.nodes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,6 +19,7 @@ import java.util.Map;
 })
 @NoArgsConstructor
 @Data
+
 public class _Meta {
     @JsonProperty("success")
     private Boolean success;
@@ -28,7 +29,7 @@ public class _Meta {
     private String message;
     @JsonProperty("rateLimit")
     private RateLimit rateLimit;
-    @JsonIgnore
+    @JsonIgnoreProperties
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 }

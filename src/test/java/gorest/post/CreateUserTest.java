@@ -11,14 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.actions.user.GetUser;
 import services.gorest.models.User;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
-import static utils.variables.SessionVariableManager.getSessionVariable;
-import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_RESPONSE;
-import static utils.variables.SessionVariables.VAR_USER_ID;
+import static utils.methods.ReusableMethods.generateRandomInt;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -29,6 +27,7 @@ import static utils.variables.SessionVariables.VAR_USER_ID;
 public class CreateUserTest {
 
     private User myUser = new User();
+    private String userId;
 
     @Steps
     private CommonValidations commonValidations;
@@ -39,24 +38,29 @@ public class CreateUserTest {
     @Steps
     private DeleteUser deleteUser;
 
+    @Steps
+    private GetUser getUser;
+
     @Before
     public void createPrereq() {
-        myUser.setEmail("email9hl@myemail.com");
-        myUser.setFirst_name("Isaac");
-        myUser.setLast_name("Asimov");
+        myUser.setFirstName("Isaac");
+        myUser.setLastName("Asimov");
         myUser.setGender("male");
+        myUser.setEmail(generateRandomInt(100,100000) + "@email.com");
     }
 
     @Test
     public void createUserTest() {
         Response response = createUser.createNewUser(myUser);
-        setSessionVariable(VAR_RESPONSE, response);
-        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
         commonValidations.validateResponseStatusCode(response, 201);
+        userId = response.as(GetUserResponse.class).getResult().getId();
     }
 
     @After
     public void tearDown() {
-        deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+        Response response = getUser.getUserById(userId);
+        commonValidations.validateResponseStatusCode(response, 200);
+        deleteUser.deleteUserById(userId);
     }
+
 }

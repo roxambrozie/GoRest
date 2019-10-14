@@ -26,7 +26,7 @@ public class CreateComment extends GoRestActions {
     }
 
     @Step("When I add a comment to a post with the post id, name, email and body")
-    public Response whenCreateNewPost(int postId, String name, String title, String body) {
+    public Response whenCreateNewComment(String postId, String name, String title, String body) {
         Comment comment = new Comment(postId, name, title, body);
         return createNewComment(comment);
     }

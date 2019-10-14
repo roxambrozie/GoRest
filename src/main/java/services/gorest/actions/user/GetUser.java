@@ -11,16 +11,15 @@ public class GetUser extends GoRestActions {
     private String GET_USER_URL = getBaseUri() + USERS_ENDPOINT;
 
     @Step("I retrieve a single user based on id {0}")
-    public Response getUserById(int id) {
+    public Response getUserById(String id) {
         Response response = SerenityRest.rest().given().log().all()
                 .spec(ReusableSpecifications.authorizedRequestSpec())
                 .baseUri(GET_USER_URL)
                 .pathParam("id", id)
                 .when()
                 .get("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }
-
 }

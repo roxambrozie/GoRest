@@ -7,6 +7,8 @@ import services.gorest.actions.GoRestActions;
 import services.gorest.models.User;
 import utils.reusable.specifications.ReusableSpecifications;
 
+import static utils.methods.ReusableMethods.generateRandomInt;
+
 public class CreateUser extends GoRestActions {
 
     private String POST_USER_URL = getBaseUri() + USERS_ENDPOINT;
@@ -19,7 +21,7 @@ public class CreateUser extends GoRestActions {
                 .when()
                 .body(user)
                 .post();
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }
@@ -27,6 +29,14 @@ public class CreateUser extends GoRestActions {
     @Step("When I create an user with email, first name, last name and gender")
     public Response whenCreateNewUser(String email, String firstName, String lastName, String gender) {
         User user = new User(email, firstName, lastName, gender);
+        return createNewUser(user);
+    }
+
+    @Step("When I create a random user with the mandatory fields")
+    public Response whenCreateRandomUserObject() {
+        String email = "email" + generateRandomInt(100, 10000) + "@email.com";
+        User user = new User(email, "John", "Doe", "male");
+
         return createNewUser(user);
     }
 }

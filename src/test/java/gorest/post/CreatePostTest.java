@@ -11,14 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import services.gorest.actions.post.CreatePost;
 import services.gorest.actions.post.DeletePost;
+import services.gorest.actions.post.GetPost;
+import services.gorest.actions.user.CreateUser;
 import services.gorest.models.Post;
+import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
-
-import static utils.variables.SessionVariableManager.getSessionVariable;
-import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_POST_ID;
-import static utils.variables.SessionVariables.VAR_RESPONSE;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -30,19 +28,27 @@ import static utils.variables.SessionVariables.VAR_RESPONSE;
 public class CreatePostTest {
 
     private Post myPost = new Post();
+    private String postId;
 
     @Steps
     private CommonValidations commonValidations;
 
     @Steps
+    private CreateUser createUser;
+
+    @Steps
     private CreatePost createPost;
+
+    @Steps
+    private GetPost getPost;
 
     @Steps
     private DeletePost deletePost;
 
     @Before
     public void createPrereq() {
-        myPost.setUser_id(179);
+        //TODO create a way to switch between adding a new user and adding a post from an existing user
+        myPost.setUserId(218);
         myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
         myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
@@ -50,13 +56,15 @@ public class CreatePostTest {
     @Test
     public void createPostTest() {
         Response response = createPost.createNewPost(myPost);
-        setSessionVariable(VAR_RESPONSE, response);
-        setSessionVariable(VAR_POST_ID, response.as(GetUserResponse.class).getResult().getId());
         commonValidations.validateResponseStatusCode(response, 201);
+        postId = response.as(GetPostResponse.class).getResult().getId();
     }
+
 
     @After
     public void tearDown() {
-        deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
+        Response response = getPost.getPostById(postId);
+        commonValidations.validateResponseStatusCode(response, 200);
+        deletePost.deletePostUsingId(postId);
     }
 }
