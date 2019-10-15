@@ -12,8 +12,10 @@ import org.junit.runner.RunWith;
 import services.gorest.actions.post.CreatePost;
 import services.gorest.actions.post.DeletePost;
 import services.gorest.actions.post.GetPost;
+import services.gorest.actions.user.CreateUser;
 import services.gorest.models.Post;
 import services.gorest.models.responses.GetPostResponse;
+import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
 @RunWith(SerenityRunner.class)
@@ -32,6 +34,9 @@ public class CreatePostTest {
     private CommonValidations commonValidations;
 
     @Steps
+    private CreateUser createUser;
+
+    @Steps
     private CreatePost createPost;
 
     @Steps
@@ -43,7 +48,7 @@ public class CreatePostTest {
     @Before
     public void createPrereq() {
         //TODO create a way to switch between adding a new user and adding a post from an existing user
-        myPost.setUserId(2202);
+        myPost.setUserId(218);
         myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
         myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }

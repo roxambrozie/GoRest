@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "success": true,
+    "code": 200,
+    "message": "OK. Everything worked as expected.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 59,
+      "reset": 1
+    }
+  },
+  "result": {
+    "id": "2",
+    "post_id": "850",
+    "name": "Margarita Greenfelder",
+    "email": "zschumm@simonis.com",
+    "body": "Ad pariatur dignissimos aut assumenda atque sunt. Assumenda quibusdam quas atque suscipit ipsum mollitia eligendi. Quia nemo praesentium eos sit nihil.\n\nConsequatur perspiciatis sunt dicta in ut. Quam velit debitis sed consectetur aut. Rerum et voluptas voluptatem et quidem quia inventore cum. Quam totam architecto numquam enim dolorum qui.",
+    "_links": {
+      "self": {
+        "href": "https://gorest.co.in/public-api/comments/2"
+      },
+      "edit": {
+        "href": "https://gorest.co.in/public-api/comments/2"
+      }
+    }
+  }
+}

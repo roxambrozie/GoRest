@@ -53,7 +53,7 @@ public class PostsStepsDefinition {
 
     @When("^I create a new post with my user id (.*), I provide the title (.*) and add the following body:$")
     public void whenCreatePost(String userId, String title, String body) {
-        int uId = Integer.valueOf(replaceExpectedWithVariable(userId, VAR_USER_ID));
+        int uId = Integer.parseInt(replaceExpectedWithVariable(userId, VAR_USER_ID));
         Response response = createPost.whenCreateNewPost(uId, title, body);
         GetPostResponse getPostResponse = response.as(GetPostResponse.class);
         setSessionVariable(VAR_RESPONSE, response);
@@ -78,7 +78,7 @@ public class PostsStepsDefinition {
 
     @When("^I update a single post using my user id (.*) with the new title (.*)$")
     public void whenUpdatePostById(String userId, String title) {
-        int uId = Integer.valueOf(replaceExpectedWithVariable(userId, VAR_USER_ID));
+        int uId = Integer.parseInt(replaceExpectedWithVariable(userId, VAR_USER_ID));
         Response response = updatePost.whenUpdatePostsTitleUsingId(getSessionVariable(VAR_POST_ID), uId, title);
         setSessionVariable(VAR_RESPONSE, response);
     }

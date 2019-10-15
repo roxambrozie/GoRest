@@ -24,7 +24,7 @@ import static utils.methods.ReusableMethods.generateRandomInt;
         @WithTag(type = "type", name = "Smoke"),
         @WithTag(type = "type", name = "Regression")
 })
-public class PostUserTest {
+public class CreateUserTest {
 
     private User myUser = new User();
     private String userId;

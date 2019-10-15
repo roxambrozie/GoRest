@@ -5,6 +5,7 @@ public enum SessionVariables {
     VAR_USER("user"),
     VAR_USER_ID("id"),
     VAR_POST_ID("id"),
+    VAR_COMMENT_ID("id"),
     VAR_STATUS_CODE("code");
 
     private final String value;

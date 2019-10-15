@@ -40,7 +40,6 @@ public class ReusableSpecifications {
         ResponseSpecification responseSpecification;
         respec = new ResponseSpecBuilder();
         respec.expectHeader("Content-Type", "application/json; charset=UTF-8");
-        respec.expectResponseTime(lessThan(5L), TimeUnit.SECONDS);
         responseSpecification = respec.build();
         return responseSpecification;
     }
