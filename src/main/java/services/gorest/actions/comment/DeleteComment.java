@@ -18,7 +18,7 @@ public class DeleteComment extends GoRestActions {
                 .pathParam("id", id)
                 .when()
                 .delete("/{id}");
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }

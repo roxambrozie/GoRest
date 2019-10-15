@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "success": true,
+    "code": 200,
+    "message": "OK. Everything worked as expected.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 59,
+      "reset": 1
+    }
+  },
+  "result": {
+    "id": "11",
+    "user_id": "1085",
+    "title": "Vitae et aliquid odit enim nulla sed.",
+    "_links": {
+      "self": {
+        "href": "https://gorest.co.in/public-api/albums/11"
+      },
+      "edit": {
+        "href": "https://gorest.co.in/public-api/albums/11"
+      }
+    }
+  }
+}

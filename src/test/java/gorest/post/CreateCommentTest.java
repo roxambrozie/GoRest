@@ -22,10 +22,6 @@ import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
-import static utils.variables.SessionVariableManager.getSessionVariable;
-import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_POST_ID;
-
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -88,7 +84,6 @@ public class CreateCommentTest {
     public void tearDown() {
         Response response = getComment.getCommentById(commentId);
         commonValidations.validateResponseStatusCode(response, 200);
-        deleteComment.deleteCommentUsingId(commentId);
         deletePost.deletePostUsingId(postId);
         deleteUser.deleteUserById(userId);
     }

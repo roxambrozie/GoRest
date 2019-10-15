@@ -9,13 +9,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import services.gorest.actions.post.CreatePost;
-import services.gorest.actions.post.DeletePost;
-import services.gorest.actions.post.GetPost;
+import services.gorest.actions.album.CreateAlbum;
+import services.gorest.actions.album.DeleteAlbum;
+import services.gorest.actions.album.GetAlbum;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
-import services.gorest.models.Post;
-import services.gorest.models.responses.GetPostResponse;
+import services.gorest.models.Album;
+import services.gorest.models.responses.GetAlbumResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
 
@@ -24,12 +24,12 @@ import services.gorest.validation.CommonValidations;
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
         @WithTag(type = "type", name = "Regression"),
-        @WithTag(type = "type", name = "Post")
+        @WithTag(type = "type", name = "Album")
 })
-public class CreatePostTest {
+public class CreateAlbumTest {
 
-    private Post myPost = new Post();
-    private String postId;
+    private Album album = new Album();
+    private String albumId;
     private String userId;
 
     @Steps
@@ -39,13 +39,13 @@ public class CreatePostTest {
     private CreateUser createUser;
 
     @Steps
-    private CreatePost createPost;
+    private CreateAlbum createAlbum;
 
     @Steps
-    private GetPost getPost;
+    private GetAlbum getAlbum;
 
     @Steps
-    private DeletePost deletePost;
+    private DeleteAlbum deleteAlbum;
 
     @Steps
     private DeleteUser deleteUser;
@@ -54,24 +54,22 @@ public class CreatePostTest {
     public void createPrereq() {
         Response userResponse = createUser.whenCreateRandomUserObject();
         userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        myPost.setUserId(Integer.parseInt(userId));
-        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
-        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
+        album.setUserId(Integer.parseInt(userId));
+        album.setTitle("Vacation photos");
     }
 
     @Test
-    public void createPostTest() {
-        Response response = createPost.createNewPost(myPost);
+    public void createAlbumTest() {
+        Response response = createAlbum.createNewAlbum(album);
+        albumId = response.as(GetAlbumResponse.class).getResult().getId();
         commonValidations.validateResponseStatusCode(response, 201);
-        postId = response.as(GetPostResponse.class).getResult().getId();
     }
-
 
     @After
     public void tearDown() {
-        Response response = getPost.getPostById(postId);
+        Response response = getAlbum.getAlbumById(albumId);
         commonValidations.validateResponseStatusCode(response, 200);
-        deletePost.deletePostUsingId(postId);
+        deleteAlbum.deleteAlbumUsingId(albumId);
         deleteUser.deleteUserById(userId);
     }
 }

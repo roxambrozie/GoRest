@@ -95,12 +95,11 @@ public class CommentsStepsDefinition {
         if (!scenario.getName().equals("Deleting comment details")) {
             Response response = getComment.getCommentById(getSessionVariable(VAR_COMMENT_ID));
             if (response.as(GetCommentResponse.class).getMeta().getCode() == 200) {
-                deleteComment.deleteCommentUsingId(getSessionVariable(VAR_COMMENT_ID));
+                deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
 
             } else {
                 System.err.println("The comment you want to delete does not exist.");
             }
-            deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
             deleteUser.deleteUserById(userId);
         }
     }

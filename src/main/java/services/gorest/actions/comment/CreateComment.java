@@ -20,7 +20,7 @@ public class CreateComment extends GoRestActions {
                 .when()
                 .body(comment)
                 .post();
-        response.then().log().all().spec(ReusableSpecifications.responseSpec());
+        response.then().log().all();
 
         return response;
     }
