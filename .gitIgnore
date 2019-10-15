@@ -27,6 +27,7 @@ hs_err_pid*
 target/
 target.site.serenity/
 .idea/
+target/
 
 
 # User-specific stuff
