@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "success": true,
+    "code": 200,
+    "message": "OK. Everything worked as expected.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 58,
+      "reset": 2
+    }
+  },
+  "result": {
+    "id": "1894",
+    "album_id": "2804",
+    "title": "Ut saepe consectetur tempore. Ut quis doloremque voluptas deserunt magnam.",
+    "url": "https://lorempixel.com/1024/768/abstract/?73813",
+    "thumbnail": "https://lorempixel.com/150/150/abstract/?60104",
+    "_links": {
+      "self": {
+        "href": "https://gorest.co.in/public-api/photos/1894"
+      },
+      "edit": {
+        "href": "https://gorest.co.in/public-api/photos/1894"
+      }
+    }
+  }
+}
