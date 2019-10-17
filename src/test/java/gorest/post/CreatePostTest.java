@@ -15,9 +15,12 @@ import services.gorest.actions.post.GetPost;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.Post;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -29,8 +32,13 @@ import services.gorest.validation.CommonValidations;
 public class CreatePostTest {
 
     private Post myPost = new Post();
+    private User user = new User();
     private String postId;
     private String userId;
+
+    private static String pathToCreateUserPayload = "/testdata/profile/createUserPayload.json";
+    private static String pathToExistingUser = "/testdata/profile/existingusers/johan_rempel.json";
+    private static GetUserResponse userResponse;
 
     @Steps
     private CommonValidations commonValidations;
@@ -52,11 +60,18 @@ public class CreatePostTest {
 
     @Before
     public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        myPost.setUserId(Integer.parseInt(userId));
-        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
-        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
+
+        if (TestConstants.USE_EXISTING_PAYLOAD) {
+            user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, User.class);
+        } else {
+            user = JSONUtils.createPojoFromJSON(pathToExistingUser, User.class);
+        }
+
+//        Response userResponse = createUser.whenCreateRandomUserObject();
+//        userId = userResponse.as(GetUserResponse.class).getResult().getId();
+//        myPost.setUserId(Integer.parseInt(userId));
+//        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
+//        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
 
     @Test

@@ -16,6 +16,11 @@ public class TestConstants {
 
     //environment
     public static final String ENVIRONMENT = PropertiesUtil.getString(properties, "environment");
+    public static final boolean USE_EXISTING_PAYLOAD = useExistingPayload();
+
+    private static boolean useExistingPayload() {
+        return System.getProperty("payload.flag") != null ? Boolean.parseBoolean(System.getProperty("payload.flag")) : true;
+    }
 
     public static final String GOREST_URI = PropertiesUtil.getString(properties, "goRest.baseURI");
 
@@ -26,4 +31,6 @@ public class TestConstants {
 
     //authorization
     public static final String GO_REST_ACCESS_TOKEN = "swKNfWJMZ8C2rktBwrnpY6dBRAQEsaBdJao6";
+
+
 }
