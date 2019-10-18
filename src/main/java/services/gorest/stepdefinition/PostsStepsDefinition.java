@@ -13,8 +13,12 @@ import services.gorest.actions.post.GetPost;
 import services.gorest.actions.post.UpdatePost;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.Post;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
 import utils.methods.ReusableMethods;
 
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
@@ -23,6 +27,8 @@ import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.*;
 
 public class PostsStepsDefinition {
+    private String pathToCreateUserPayload = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
+    private String pathToExistingUser = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\johan_rempel.json";
 
     @Steps
     private CreatePost createPost;
@@ -83,6 +89,19 @@ public class PostsStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
+    @When("^I prepare my prerequisites for the posts$")
+    public void whenCreatePrerequisitesForPosts() {
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
+        } else {
+            User user = JSONUtils.createPojoFromJSON(pathToExistingUser, User.class);
+            setSessionVariable(VAR_USER_ID, user.getId());
+        }
+
+    }
 
     @After("@PostSmoke")
     public void tearDownDeletePost(Scenario scenario) {

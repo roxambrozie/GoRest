@@ -22,6 +22,8 @@ import services.gorest.validation.CommonValidations;
 import utils.constants.TestConstants;
 import utils.methods.JSONUtils;
 
+import java.io.IOException;
+
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -36,9 +38,8 @@ public class CreatePostTest {
     private String postId;
     private String userId;
 
-    private static String pathToCreateUserPayload = "/testdata/profile/createUserPayload.json";
-    private static String pathToExistingUser = "/testdata/profile/existingusers/johan_rempel.json";
-    private static GetUserResponse userResponse;
+    private static String pathToCreateUserPayload = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
+    private static String pathToExistingUser = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\johan_rempel.json";
 
     @Steps
     private CommonValidations commonValidations;
@@ -59,19 +60,20 @@ public class CreatePostTest {
     private DeleteUser deleteUser;
 
     @Before
-    public void createPrereq() {
+    public void createPrereq() throws IOException {
 
-        if (TestConstants.USE_EXISTING_PAYLOAD) {
-            user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, User.class);
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            userId = userResponse.as(GetUserResponse.class).getResult().getId();
+            myPost.setUserId(Integer.parseInt(userId));
         } else {
             user = JSONUtils.createPojoFromJSON(pathToExistingUser, User.class);
+            myPost.setUserId(Integer.parseInt(user.getId()));
         }
 
-//        Response userResponse = createUser.whenCreateRandomUserObject();
-//        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-//        myPost.setUserId(Integer.parseInt(userId));
-//        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
-//        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
+        myPost.setTitle("NASA Takes Delivery of First All-Electric Experimental Aircraft");
+        myPost.setBody("The first all-electric configuration of NASA’s X-57 Maxwell now is at the agency’s Armstrong Flight Research Center in Edwards, California.");
     }
 
     @Test
@@ -87,6 +89,8 @@ public class CreatePostTest {
         Response response = getPost.getPostById(postId);
         commonValidations.validateResponseStatusCode(response, 200);
         deletePost.deletePostUsingId(postId);
-        deleteUser.deleteUserById(userId);
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            deleteUser.deleteUserById(userId);
+        }
     }
 }

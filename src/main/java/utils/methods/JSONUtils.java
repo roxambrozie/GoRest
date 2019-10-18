@@ -1,10 +1,10 @@
 package utils.methods;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -18,8 +18,7 @@ public class JSONUtils {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            byte[] jsonData = IOUtils.toByteArray(JSONUtils.class.getResourceAsStream(jsonFile));
-            return mapper.readValue(jsonData, tClass);
+            return mapper.readValue(new File(jsonFile), tClass);
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage());
             exception.printStackTrace();

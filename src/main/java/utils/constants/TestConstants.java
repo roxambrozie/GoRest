@@ -16,7 +16,7 @@ public class TestConstants {
 
     //environment
     public static final String ENVIRONMENT = PropertiesUtil.getString(properties, "environment");
-    public static final boolean USE_EXISTING_PAYLOAD = useExistingPayload();
+    public static final boolean CREATE_NEW_USER_FLAG = useExistingPayload();
 
     private static boolean useExistingPayload() {
         return System.getProperty("payload.flag") != null ? Boolean.parseBoolean(System.getProperty("payload.flag")) : true;

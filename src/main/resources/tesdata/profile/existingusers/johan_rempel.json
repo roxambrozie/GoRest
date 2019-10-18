@@ -1,4 +1,5 @@
 {
+  "id": "1873",
   "first_name": "Johan",
   "last_name": "Rempel",
   "gender": "male",
@@ -6,7 +7,7 @@
   "email": "amin@example.net",
   "phone": "+1-583-412-6713",
   "website": "http://www.waelchi.com/",
-  "address": "13966 Emmerich Plains Apt. 301\nPort Ladariushaven, UT 72461-2363",
+  "address": "13966 Emmerich Plains Apt. 301 Port Ladariushaven, UT 72461-2363",
   "status": "active",
   "_links": {
     "self": {
