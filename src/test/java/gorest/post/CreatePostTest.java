@@ -24,6 +24,9 @@ import utils.methods.JSONUtils;
 
 import java.io.IOException;
 
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
+
 @RunWith(SerenityRunner.class)
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
@@ -37,9 +40,6 @@ public class CreatePostTest {
     private User user = new User();
     private String postId;
     private String userId;
-
-    private static String pathToCreateUserPayload = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
-    private static String pathToExistingUser = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\johan_rempel.json";
 
     @Steps
     private CommonValidations commonValidations;
@@ -63,12 +63,12 @@ public class CreatePostTest {
     public void createPrereq() throws IOException {
 
         if (TestConstants.CREATE_NEW_USER_FLAG) {
-            GetUserResponse user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, GetUserResponse.class);
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
             Response userResponse = createUser.createNewUser(user.getResult());
             userId = userResponse.as(GetUserResponse.class).getResult().getId();
             myPost.setUserId(Integer.parseInt(userId));
         } else {
-            user = JSONUtils.createPojoFromJSON(pathToExistingUser, User.class);
+            user = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_USER, User.class);
             myPost.setUserId(Integer.parseInt(user.getId()));
         }
 

@@ -17,10 +17,18 @@ import services.gorest.actions.post.DeletePost;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.Comment;
+import services.gorest.models.Post;
 import services.gorest.models.responses.GetCommentResponse;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
+
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_POST;
+import static utils.variables.SessionVariableManager.setSessionVariable;
+import static utils.variables.SessionVariables.VAR_POST_ID;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -63,10 +71,17 @@ public class CreateCommentTest {
 
     @Before
     public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(userId), "Title", "Body");
-        postId = postResponse.as(GetPostResponse.class).getResult().getId();
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            userId = userResponse.as(GetUserResponse.class).getResult().getId();
+            Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(userId), "Title", "Body");
+            postId = postResponse.as(GetPostResponse.class).getResult().getId();
+        } else {
+            Post post = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_POST, Post.class);
+            postId = post.getId();
+        }
         comment.setPostId(postId);
         comment.setName("Isaac Newton");
         comment.setEmail("email213@email.com");
@@ -84,7 +99,10 @@ public class CreateCommentTest {
     public void tearDown() {
         Response response = getComment.getCommentById(commentId);
         commonValidations.validateResponseStatusCode(response, 200);
-        deletePost.deletePostUsingId(postId);
-        deleteUser.deleteUserById(userId);
+        deleteComment.deleteCommentUsingId(commentId);
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            deletePost.deletePostUsingId(postId);
+            deleteUser.deleteUserById(userId);
+        }
     }
 }

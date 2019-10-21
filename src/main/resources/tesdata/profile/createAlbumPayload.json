@@ -1,0 +1,12 @@
+{
+  "user_id": "333",
+  "title": "Summer Album",
+  "_links": {
+    "self": {
+      "href": "https://gorest.co.in/public-api/albums/2960"
+    },
+    "edit": {
+      "href": "https://gorest.co.in/public-api/albums/2960"
+    }
+  }
+}

@@ -14,10 +14,15 @@ import services.gorest.actions.post.CreatePost;
 import services.gorest.actions.post.DeletePost;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.Post;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetCommentResponse;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
 
+import static utils.constants.TestConstants.*;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
@@ -50,12 +55,27 @@ public class CommentsStepsDefinition {
     @Steps
     private DeleteUser deleteUser;
 
-    @Before("@CommentSmoke")
-    public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(userId), "Title", "Body");
-        setSessionVariable(VAR_POST_ID, postResponse.as(GetPostResponse.class).getResult().getId());
+//    @Before("@CommentSmoke")
+//    public void createPrereq() {
+//        Response userResponse = createUser.whenCreateRandomUserObject();
+//        userId = userResponse.as(GetUserResponse.class).getResult().getId();
+//        Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(userId), "Title", "Body");
+//        setSessionVariable(VAR_POST_ID, postResponse.as(GetPostResponse.class).getResult().getId());
+//    }
+
+    @When("^I prepare my prerequisites for creating a comment$")
+    public void whenCreatePrerequisitesForComments() {
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
+            Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(getSessionVariable(VAR_USER_ID)), "Title", "Body");
+            setSessionVariable(VAR_POST_ID, postResponse.as(GetPostResponse.class).getResult().getId());
+        } else {
+            Post post = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_POST, Post.class);
+            setSessionVariable(VAR_POST_ID, post.getId());
+        }
     }
 
     @When("^I add a comment for the post with the id (.*), I provide my name (.*), email address (.*) and add the following body:$")
@@ -92,7 +112,7 @@ public class CommentsStepsDefinition {
 
     @After("@CommentSmoke")
     public void tearDownDeletePost(Scenario scenario) {
-        if (!scenario.getName().equals("Deleting comment details")) {
+        if (scenario.getName().equals("Deleting comment details")) {
             Response response = getComment.getCommentById(getSessionVariable(VAR_COMMENT_ID));
             if (response.as(GetCommentResponse.class).getMeta().getCode() == 200) {
                 deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
@@ -100,7 +120,9 @@ public class CommentsStepsDefinition {
             } else {
                 System.err.println("The comment you want to delete does not exist.");
             }
-            deleteUser.deleteUserById(userId);
+            if (CREATE_NEW_USER_FLAG) {
+                deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+            }
         }
     }
 }

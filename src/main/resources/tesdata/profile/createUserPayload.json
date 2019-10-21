@@ -1,20 +1,9 @@
 {
-  "_meta": {
-    "success": true,
-    "code": 201,
-    "message": "Data validation failed. Please check the response body for detailed error messages.",
-    "rateLimit": {
-      "limit": 60,
-      "remaining": 59,
-      "reset": 1
-    }
-  },
-  "result": {
     "first_name": "John",
     "last_name": "Doe",
     "gender": "male",
     "dob": "11-02-1990",
-    "email": "jojn_doe_email@example.net",
+    "email": "jon_d9009@example.net",
     "phone": "+1-583-412-6713",
     "website": "http://www.waelchi.com/",
     "address": "13966 Emmerich Plains Apt. 301 Port Ladariushaven, UT 72461-2363",
@@ -31,4 +20,3 @@
       }
     }
   }
-}

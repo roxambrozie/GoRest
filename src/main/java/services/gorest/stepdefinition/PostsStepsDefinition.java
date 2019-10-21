@@ -21,14 +21,14 @@ import utils.constants.TestConstants;
 import utils.methods.JSONUtils;
 import utils.methods.ReusableMethods;
 
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.*;
 
 public class PostsStepsDefinition {
-    private String pathToCreateUserPayload = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
-    private String pathToExistingUser = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\johan_rempel.json";
 
     @Steps
     private CreatePost createPost;
@@ -51,11 +51,11 @@ public class PostsStepsDefinition {
     @Steps
     private DeleteUser deleteUser;
 
-    @Before("@PostSmoke")
-    public void createPrereq() {
-        Response response = createUser.whenCreateRandomUserObject();
-        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
-    }
+//    @Before("@PostSmoke")
+//    public void createPrereq() {
+//        Response response = createUser.whenCreateRandomUserObject();
+//        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
+//    }
 
     @When("^I create a new post with my user id (.*), I provide the title (.*) and add the following body:$")
     public void whenCreatePost(String userId, String title, String body) {
@@ -89,18 +89,17 @@ public class PostsStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @When("^I prepare my prerequisites for the posts$")
+    @When("^I prepare my prerequisites for creating a post$")
     public void whenCreatePrerequisitesForPosts() {
 
         if (TestConstants.CREATE_NEW_USER_FLAG) {
-            GetUserResponse user = JSONUtils.createPojoFromJSON(pathToCreateUserPayload, GetUserResponse.class);
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
             Response userResponse = createUser.createNewUser(user.getResult());
             setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
         } else {
-            User user = JSONUtils.createPojoFromJSON(pathToExistingUser, User.class);
+            User user = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_USER, User.class);
             setSessionVariable(VAR_USER_ID, user.getId());
         }
-
     }
 
     @After("@PostSmoke")
@@ -112,7 +111,9 @@ public class PostsStepsDefinition {
             } else {
                 System.err.println("The post you want to delete does not exist.");
             }
-            deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+            if (TestConstants.CREATE_NEW_USER_FLAG) {
+                deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
+            }
         }
     }
 }
