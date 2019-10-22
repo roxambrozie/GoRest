@@ -36,9 +36,11 @@ public class TestConstants {
 
     //paths
     public static final String PATH_TO_CREATE_USER_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
+    public static final String PATH_TO_CREATE_POST_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createPostPayload.json";
+    public static final String PATH_TO_CREATE_ALBUM_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createAlbumPayload.json";
     public static final String PATH_TO_EXISTING_USER = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\john_doe.json";
-    public static final String PATH_TO_EXISTING_POST = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingposts\\postId3.json";
-    public static final String PATH_TO_EXISTING_ALBUM = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingalbums\\albumId1.json";
+    public static final String PATH_TO_EXISTING_POST = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingposts\\postId37.json";
+    public static final String PATH_TO_EXISTING_ALBUM = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingalbums\\albumId11.json";
 
 
 }

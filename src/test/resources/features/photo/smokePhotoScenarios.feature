@@ -2,6 +2,8 @@
 Feature: Smoke testing the photos endpoint
 
   Background: Creating a photo
+
+    When I prepare my prerequisites for adding a photo
     When I add a photo for the album with the id as expected, I provide the title Summer Sunset, url https://lorempixel.com/1024/768/abstract/?73813 and the following thumbnail: https://lorempixel.com/150/150/abstract/?60104
     Then I check that the status code from the response body is 201
 

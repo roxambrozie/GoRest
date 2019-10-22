@@ -2,7 +2,6 @@ package services.gorest.stepdefinition;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
@@ -14,18 +13,21 @@ import services.gorest.actions.photo.GetPhoto;
 import services.gorest.actions.photo.UpdatePhoto;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.Album;
 import services.gorest.models.responses.GetAlbumResponse;
-import services.gorest.models.responses.GetCommentResponse;
 import services.gorest.models.responses.GetPhotoResponse;
 import services.gorest.models.responses.GetUserResponse;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
 
+import static utils.constants.TestConstants.*;
+import static utils.methods.ReusableMethods.generateRandomInt;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.*;
 
 public class PhotosStepsDefinition {
-    private String userId;
 
     @Steps
     private CreateUser createUser;
@@ -51,12 +53,21 @@ public class PhotosStepsDefinition {
     @Steps
     private DeleteUser deleteUser;
 
-    @Before("@PhotoSmoke")
-    public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        Response albumResponse = createAlbum.whenCreateNewAlbum(Integer.parseInt(userId), "My album");
-        setSessionVariable(VAR_ALBUM_ID, albumResponse.as(GetAlbumResponse.class).getResult().getId());
+    @When("^I prepare my prerequisites for adding a photo$")
+    public void whenCreatePrerequisitesForPhotos() {
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            user.getResult().setEmail(generateRandomInt(100,100000) + "@email.com");
+            Response userResponse = createUser.createNewUser(user.getResult());
+            setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
+            GetAlbumResponse album = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_ALBUM_PAYLOAD, GetAlbumResponse.class);
+            Response albumResponse = createAlbum.createNewAlbum(album.getResult());
+            setSessionVariable(VAR_ALBUM_ID, albumResponse.as(GetAlbumResponse.class).getResult().getId());
+        } else {
+            Album album = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_ALBUM, Album.class);
+            setSessionVariable(VAR_ALBUM_ID, album.getId());
+        }
     }
 
     @When("^I add a photo for the album with the id (.*), I provide the title (.*), url (.*) and the following thumbnail: (.*)$")
@@ -97,12 +108,15 @@ public class PhotosStepsDefinition {
         if (!scenario.getName().equals("Deleting photo details")) {
             Response response = getPhoto.getPhotoById(getSessionVariable(VAR_PHOTO_ID));
             if (response.as(GetPhotoResponse.class).getMeta().getCode() == 200) {
-                deleteAlbum.deleteAlbumUsingId(getSessionVariable(VAR_ALBUM_ID));
+                deletePhoto.deletePhotoUsingId(getSessionVariable(VAR_PHOTO_ID));
 
             } else {
                 System.err.println("The photo you want to delete does not exist.");
             }
-            deleteUser.deleteUserById(userId);
+        }
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            deleteAlbum.deleteAlbumUsingId(getSessionVariable(VAR_ALBUM_ID));
+            deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         }
     }
 }

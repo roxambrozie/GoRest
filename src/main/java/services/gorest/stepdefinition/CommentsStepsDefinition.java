@@ -21,13 +21,13 @@ import utils.constants.TestConstants;
 import utils.methods.JSONUtils;
 
 import static utils.constants.TestConstants.*;
+import static utils.methods.ReusableMethods.generateRandomInt;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
 import static utils.variables.SessionVariables.*;
 
 public class CommentsStepsDefinition {
-    private String userId;
 
     @Steps
     private CreateUser createUser;
@@ -58,8 +58,10 @@ public class CommentsStepsDefinition {
 
         if (TestConstants.CREATE_NEW_USER_FLAG) {
             GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            user.getResult().setEmail(generateRandomInt(100,100000) + "@email.com");
             Response userResponse = createUser.createNewUser(user.getResult());
             setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
+            GetPostResponse post = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_POST_PAYLOAD, GetPostResponse.class);
             Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(getSessionVariable(VAR_USER_ID)), "Title", "Body");
             setSessionVariable(VAR_POST_ID, postResponse.as(GetPostResponse.class).getResult().getId());
         } else {

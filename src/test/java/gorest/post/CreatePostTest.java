@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
 import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
+import static utils.methods.ReusableMethods.generateRandomInt;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -64,6 +65,7 @@ public class CreatePostTest {
 
         if (TestConstants.CREATE_NEW_USER_FLAG) {
             GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            user.getResult().setEmail(generateRandomInt(100, 100000) + "@email.com");
             Response userResponse = createUser.createNewUser(user.getResult());
             userId = userResponse.as(GetUserResponse.class).getResult().getId();
             myPost.setUserId(Integer.parseInt(userId));

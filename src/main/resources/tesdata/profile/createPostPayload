@@ -1,5 +1,17 @@
 {
-  "user_id": "1000",
-  "title": "Posting",
-  "body": "This is a great post."
+  "_meta": {
+    "success": true,
+    "code": 200,
+    "message": "OK. Everything worked as expected.",
+    "rateLimit": {
+      "limit": 60,
+      "remaining": 59,
+      "reset": 1
+    }
+  },
+  "result": {
+    "user_id": "1000",
+    "title": "Posting",
+    "body": "This is a great post."
+  }
 }

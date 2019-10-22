@@ -21,6 +21,7 @@ import utils.methods.ReusableMethods;
 
 import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
 import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
+import static utils.methods.ReusableMethods.generateRandomInt;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
@@ -50,10 +51,11 @@ public class PostsStepsDefinition {
     private DeleteUser deleteUser;
 
     @When("^I prepare my prerequisites$")
-    public void whenCreatePrerequisitesForPosts() {
+    public void whenCreatePrerequisites() {
 
         if (TestConstants.CREATE_NEW_USER_FLAG) {
             GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            user.getResult().setEmail(generateRandomInt(100, 100000) + "@email.com");
             Response userResponse = createUser.createNewUser(user.getResult());
             setSessionVariable(VAR_USER_ID, userResponse.as(GetUserResponse.class).getResult().getId());
         } else {
