@@ -1,6 +1,5 @@
 package gorest.post;
 
-import com.google.inject.internal.cglib.core.$RejectModifierPredicate;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -12,16 +11,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import services.gorest.actions.album.CreateAlbum;
 import services.gorest.actions.album.DeleteAlbum;
-import services.gorest.actions.album.GetAlbum;
 import services.gorest.actions.photo.CreatePhoto;
 import services.gorest.actions.photo.GetPhoto;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.Album;
 import services.gorest.models.Photo;
 import services.gorest.models.responses.GetAlbumResponse;
 import services.gorest.models.responses.GetPhotoResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
+
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_ALBUM;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -59,10 +63,17 @@ public class CreatePhotoTest {
 
     @Before
     public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        Response albumResponse = createAlbum.whenCreateNewAlbum(Integer.parseInt(userId), "My Album");
-        albumId = albumResponse.as(GetAlbumResponse.class).getResult().getId();
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            userId = userResponse.as(GetUserResponse.class).getResult().getId();
+            Response albumResponse = createAlbum.whenCreateNewAlbum(Integer.parseInt(userId), "My Album");
+            albumId = albumResponse.as(GetAlbumResponse.class).getResult().getId();
+        } else {
+            Album album = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_ALBUM, Album.class);
+            albumId = album.getId();
+        }
         photo.setAlbumId(albumId);
         photo.setTitle("My photo");
         photo.setUrl("https://lorempixel.com/1024/768/abstract/?73813");
@@ -80,9 +91,9 @@ public class CreatePhotoTest {
     public void tearDown() {
         Response response = getPhoto.getPhotoById(photoId);
         commonValidations.validateResponseStatusCode(response, 200);
-        deleteAlbum.deleteAlbumUsingId(albumId);
-        deleteUser.deleteUserById(userId);
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            deleteAlbum.deleteAlbumUsingId(albumId);
+            deleteUser.deleteUserById(userId);
+        }
     }
-
-
 }

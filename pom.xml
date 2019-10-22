@@ -98,8 +98,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <forkCount>3C</forkCount>
-                    <reuseForks>true</reuseForks>
                     <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
@@ -108,9 +106,6 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
                 <configuration>
-                    <parallel>classes</parallel>
-                    <useUnlimitedThreads>false</useUnlimitedThreads>
-                    <threadCount>10</threadCount>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>

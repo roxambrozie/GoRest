@@ -12,10 +12,15 @@ import services.gorest.actions.album.GetAlbum;
 import services.gorest.actions.album.UpdateAlbum;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetAlbumResponse;
 import services.gorest.models.responses.GetUserResponse;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
 import utils.methods.ReusableMethods;
 
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
 import static utils.variables.SessionVariableManager.getSessionVariable;
 import static utils.variables.SessionVariableManager.setSessionVariable;
@@ -44,11 +49,11 @@ public class AlbumsStepsDefinition {
     @Steps
     private ReusableMethods reusableMethods;
 
-    @Before("@AlbumSmoke")
-    public void createPrereq() {
-        Response response = createUser.whenCreateRandomUserObject();
-        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
-    }
+//    @Before("@AlbumSmoke")
+//    public void createPrereq() {
+//        Response response = createUser.whenCreateRandomUserObject();
+//        setSessionVariable(VAR_USER_ID, response.as(GetUserResponse.class).getResult().getId());
+//    }
 
     @When("^I create a new album with my user id (.*), I provide the title (.*)$")
     public void whenCreateAlbum(String userId, String title) {
@@ -91,6 +96,8 @@ public class AlbumsStepsDefinition {
             } else {
                 System.err.println("The album you want to delete does not exist.");
             }
+        }
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
             deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         }
     }

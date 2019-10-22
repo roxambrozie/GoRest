@@ -2,7 +2,6 @@ package services.gorest.stepdefinition;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
@@ -15,7 +14,6 @@ import services.gorest.actions.post.DeletePost;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.Post;
-import services.gorest.models.User;
 import services.gorest.models.responses.GetCommentResponse;
 import services.gorest.models.responses.GetPostResponse;
 import services.gorest.models.responses.GetUserResponse;
@@ -54,14 +52,6 @@ public class CommentsStepsDefinition {
 
     @Steps
     private DeleteUser deleteUser;
-
-//    @Before("@CommentSmoke")
-//    public void createPrereq() {
-//        Response userResponse = createUser.whenCreateRandomUserObject();
-//        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-//        Response postResponse = createPost.whenCreateNewPost(Integer.parseInt(userId), "Title", "Body");
-//        setSessionVariable(VAR_POST_ID, postResponse.as(GetPostResponse.class).getResult().getId());
-//    }
 
     @When("^I prepare my prerequisites for creating a comment$")
     public void whenCreatePrerequisitesForComments() {
@@ -111,18 +101,18 @@ public class CommentsStepsDefinition {
     }
 
     @After("@CommentSmoke")
-    public void tearDownDeletePost(Scenario scenario) {
-        if (scenario.getName().equals("Deleting comment details")) {
+    public void tearDownDeleteComment(Scenario scenario) {
+        if (!scenario.getName().equals("Deleting comment details")) {
             Response response = getComment.getCommentById(getSessionVariable(VAR_COMMENT_ID));
             if (response.as(GetCommentResponse.class).getMeta().getCode() == 200) {
-                deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
-
+                deleteComment.deleteCommentUsingId(getSessionVariable(VAR_COMMENT_ID));
             } else {
                 System.err.println("The comment you want to delete does not exist.");
             }
-            if (CREATE_NEW_USER_FLAG) {
-                deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
-            }
+        }
+        if (CREATE_NEW_USER_FLAG) {
+            deletePost.deletePostUsingId(getSessionVariable(VAR_POST_ID));
+            deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));
         }
     }
 }

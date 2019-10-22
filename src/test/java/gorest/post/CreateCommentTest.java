@@ -27,8 +27,6 @@ import utils.methods.JSONUtils;
 
 import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
 import static utils.constants.TestConstants.PATH_TO_EXISTING_POST;
-import static utils.variables.SessionVariableManager.setSessionVariable;
-import static utils.variables.SessionVariables.VAR_POST_ID;
 
 @RunWith(SerenityRunner.class)
 @WithTags({

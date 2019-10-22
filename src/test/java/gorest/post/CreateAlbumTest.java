@@ -15,9 +15,15 @@ import services.gorest.actions.album.GetAlbum;
 import services.gorest.actions.user.CreateUser;
 import services.gorest.actions.user.DeleteUser;
 import services.gorest.models.Album;
+import services.gorest.models.User;
 import services.gorest.models.responses.GetAlbumResponse;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import utils.constants.TestConstants;
+import utils.methods.JSONUtils;
+
+import static utils.constants.TestConstants.PATH_TO_CREATE_USER_PAYLOAD;
+import static utils.constants.TestConstants.PATH_TO_EXISTING_USER;
 
 @RunWith(SerenityRunner.class)
 @WithTags({
@@ -29,6 +35,7 @@ import services.gorest.validation.CommonValidations;
 public class CreateAlbumTest {
 
     private Album album = new Album();
+    private User user = new User();
     private String albumId;
     private String userId;
 
@@ -52,9 +59,16 @@ public class CreateAlbumTest {
 
     @Before
     public void createPrereq() {
-        Response userResponse = createUser.whenCreateRandomUserObject();
-        userId = userResponse.as(GetUserResponse.class).getResult().getId();
-        album.setUserId(Integer.parseInt(userId));
+
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            GetUserResponse user = JSONUtils.createPojoFromJSON(PATH_TO_CREATE_USER_PAYLOAD, GetUserResponse.class);
+            Response userResponse = createUser.createNewUser(user.getResult());
+            userId = userResponse.as(GetUserResponse.class).getResult().getId();
+            album.setUserId(Integer.parseInt(userId));
+        } else {
+            user = JSONUtils.createPojoFromJSON(PATH_TO_EXISTING_USER, User.class);
+            album.setUserId(Integer.parseInt(user.getId()));
+        }
         album.setTitle("Vacation photos");
     }
 
@@ -70,6 +84,8 @@ public class CreateAlbumTest {
         Response response = getAlbum.getAlbumById(albumId);
         commonValidations.validateResponseStatusCode(response, 200);
         deleteAlbum.deleteAlbumUsingId(albumId);
-        deleteUser.deleteUserById(userId);
+        if (TestConstants.CREATE_NEW_USER_FLAG) {
+            deleteUser.deleteUserById(userId);
+        }
     }
 }
