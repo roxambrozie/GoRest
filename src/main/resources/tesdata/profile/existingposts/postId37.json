@@ -1,0 +1,14 @@
+{
+  "id": "37",
+  "user_id": "1309",
+  "title": "Enim est quaerat omnis doloribus. Et enim eum dolorum adipisci aut expedita facilis.",
+  "body": "Velit molestiae et quo pariatur ab ea. Magnam sunt dolorem voluptatem ex voluptatibus officiis. Repellendus repudiandae voluptatum placeat quia. Commodi eveniet assumenda inventore.",
+  "_links": {
+    "self": {
+      "href": "https://gorest.co.in/public-api/posts/1"
+    },
+    "edit": {
+      "href": "https://gorest.co.in/public-api/posts/1"
+    }
+  }
+}

@@ -6,6 +6,8 @@ import utils.property.PropertiesUtil;
 
 import java.util.Properties;
 
+import static java.lang.System.getProperty;
+
 public class TestConstants {
 
     private static Logger log = LoggerFactory.getLogger(TestConstants.class);
@@ -16,6 +18,11 @@ public class TestConstants {
 
     //environment
     public static final String ENVIRONMENT = PropertiesUtil.getString(properties, "environment");
+    public static final boolean CREATE_NEW_USER_FLAG = useExistingPayload();
+
+    private static boolean useExistingPayload() {
+        return System.getProperty("payload.flag") != null ? Boolean.parseBoolean(System.getProperty("payload.flag")) : false;
+    }
 
     public static final String GOREST_URI = PropertiesUtil.getString(properties, "goRest.baseURI");
 
@@ -26,4 +33,14 @@ public class TestConstants {
 
     //authorization
     public static final String GO_REST_ACCESS_TOKEN = "swKNfWJMZ8C2rktBwrnpY6dBRAQEsaBdJao6";
+
+    //paths
+    public static final String PATH_TO_CREATE_USER_PAYLOAD = "\\tesdata\\profile\\createUserPayload.json";
+    public static final String PATH_TO_CREATE_POST_PAYLOAD = "\\tesdata\\profile\\createPostPayload.json";
+    public static final String PATH_TO_CREATE_ALBUM_PAYLOAD = "\\tesdata\\profile\\createAlbumPayload.json";
+    public static final String PATH_TO_EXISTING_USER = "\\tesdata\\profile\\existingusers\\john_doe.json";
+    public static final String PATH_TO_EXISTING_POST = "\\tesdata\\profile\\existingposts\\postId37.json";
+    public static final String PATH_TO_EXISTING_ALBUM = "\\tesdata\\profile\\existingalbums\\albumId11.json";
+
+
 }

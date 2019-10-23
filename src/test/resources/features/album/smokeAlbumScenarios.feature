@@ -2,6 +2,8 @@
 Feature: Smoke testing the albums endpoint
 
   Background: Creating an album
+
+    When I prepare my prerequisites
     When I create a new album with my user id as expected, I provide the title Vacation photos
     Then I check that the status code from the response body is 201
 

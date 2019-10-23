@@ -2,6 +2,8 @@
 Feature: Smoke testing the comments endpoint
 
   Background: Creating a comment
+
+    When I prepare my prerequisites for creating a comment
     When I add a comment for the post with the id as expected, I provide my name Elon Musk, email address elon@email.com and add the following body:
      """
    I believe in innovation and that the way you get innovation is you fund research and you learn the basic facts.
