@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static org.apache.commons.io.IOUtils.toByteArray;
 
 
 public class JSONUtils {
@@ -18,7 +19,8 @@ public class JSONUtils {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.readValue(new File(jsonFile), tClass);
+            byte[] jsonData = toByteArray(JSONUtils.class.getClassLoader().getResourceAsStream(jsonFile));
+            return mapper.readValue(jsonData, tClass);
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage());
             exception.printStackTrace();

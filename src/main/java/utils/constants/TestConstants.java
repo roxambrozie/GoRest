@@ -35,12 +35,12 @@ public class TestConstants {
     public static final String GO_REST_ACCESS_TOKEN = "swKNfWJMZ8C2rktBwrnpY6dBRAQEsaBdJao6";
 
     //paths
-    public static final String PATH_TO_CREATE_USER_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createUserPayload.json";
-    public static final String PATH_TO_CREATE_POST_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createPostPayload.json";
-    public static final String PATH_TO_CREATE_ALBUM_PAYLOAD = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\createAlbumPayload.json";
-    public static final String PATH_TO_EXISTING_USER = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingusers\\john_doe.json";
-    public static final String PATH_TO_EXISTING_POST = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingposts\\postId37.json";
-    public static final String PATH_TO_EXISTING_ALBUM = "D:\\GoRest\\src\\main\\resources\\tesdata\\profile\\existingalbums\\albumId11.json";
+    public static final String PATH_TO_CREATE_USER_PAYLOAD = "\\tesdata\\profile\\createUserPayload.json";
+    public static final String PATH_TO_CREATE_POST_PAYLOAD = "\\tesdata\\profile\\createPostPayload.json";
+    public static final String PATH_TO_CREATE_ALBUM_PAYLOAD = "\\tesdata\\profile\\createAlbumPayload.json";
+    public static final String PATH_TO_EXISTING_USER = "\\tesdata\\profile\\existingusers\\john_doe.json";
+    public static final String PATH_TO_EXISTING_POST = "\\tesdata\\profile\\existingposts\\postId37.json";
+    public static final String PATH_TO_EXISTING_ALBUM = "\\tesdata\\profile\\existingalbums\\albumId11.json";
 
 
 }
