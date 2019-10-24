@@ -66,4 +66,23 @@ public class User {
         this.gender = gender;
     }
 
+    public User(String firstName, String lastName, String gender, String dob, String email, String phone, String website, String address, String status) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dob = dob;
+        this.email = email;
+        this.phone = phone;
+        this.website = website;
+        this.address = address;
+        this.status = status;
+    }
+
+    public User(String firstName, String lastName, String gender, String dob, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dob = dob;
+        this.email = email;
+    }
 }

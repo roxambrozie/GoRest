@@ -2,6 +2,7 @@ package services.gorest.stepdefinition;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
@@ -11,6 +12,7 @@ import services.gorest.actions.user.GetUser;
 import services.gorest.actions.user.UpdateUser;
 import services.gorest.models.responses.GetUserResponse;
 import services.gorest.validation.CommonValidations;
+import services.gorest.validation.UserValidations;
 import utils.methods.ReusableMethods;
 
 import static utils.methods.ReusableMethods.replaceExpectedWithVariable;
@@ -37,12 +39,33 @@ public class UserStepsDefinition {
     private CommonValidations commonValidations;
 
     @Steps
+    private UserValidations userValidations;
+
+    @Steps
     private ReusableMethods reusableMethods;
 
 
     @When("^I create a new user with email (.*), first name (.*), last name (.*) and gender (.*)$")
     public void whenCreateUser(String email, String firstName, String lastName, String gender) {
         Response response = createUser.whenCreateNewUser(email, firstName, lastName, gender);
+        GetUserResponse getUserResponse = response.as(GetUserResponse.class);
+        setSessionVariable(VAR_USER, getUserResponse.getResult());
+        setSessionVariable(VAR_USER_ID, getUserResponse.getResult().getId());
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I create a new user with first name (.*), last name (.*), gender (.*), date of birth (.*), email (.*), phone number (.*), website (.*), address (.*) and status (.*)$")
+    public void whenCreateUser(String firstName, String lastName, String gender, String dob, String email, String phone, String website, String address, String status) {
+        Response response = createUser.whenCreateNewUserWithAllFields(firstName, lastName, gender, dob, email, phone, website, address, status);
+        GetUserResponse getUserResponse = response.as(GetUserResponse.class);
+        setSessionVariable(VAR_USER, getUserResponse.getResult());
+        setSessionVariable(VAR_USER_ID, getUserResponse.getResult().getId());
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I create a new user with first name (.*), last name (.*), gender (.*), date of birth (.*) and email (.*)$")
+    public void whenCreateUser(String firstName, String lastName, String gender, String dob, String email) {
+        Response response = createUser.whenCreateUserWihMandatoryAndDob(firstName, lastName, gender, dob, email);
         GetUserResponse getUserResponse = response.as(GetUserResponse.class);
         setSessionVariable(VAR_USER, getUserResponse.getResult());
         setSessionVariable(VAR_USER_ID, getUserResponse.getResult().getId());
@@ -77,7 +100,47 @@ public class UserStepsDefinition {
         setSessionVariable(VAR_RESPONSE, response);
     }
 
-    @After("@UserSmoke")
+    @Then("^I check the name of the created user is (.*) (.*)$")
+    public void thenCheckName(String firstName, String lastName) {
+        userValidations.validateUserName(getSessionVariable(VAR_RESPONSE), firstName, lastName);
+    }
+
+    @Then("^I check the email of the created user is (.*)$")
+    public void thenCheckEmail(String firstName) {
+        userValidations.validateUserEmail(getSessionVariable(VAR_RESPONSE), firstName);
+    }
+
+    @Then("^I check the gender of the created user is (.*)$")
+    public void thenCheckGender(String gender) {
+        userValidations.validateUserGender(getSessionVariable(VAR_RESPONSE), gender);
+    }
+
+    @Then("^I check the date of birth of the created user is (.*)$")
+    public void thenCheckDateOfBirth(String dob) {
+        userValidations.validateUserDateOfBirth(getSessionVariable(VAR_RESPONSE), dob);
+    }
+
+    @Then("^I check the phone of the created user is (.*)$")
+    public void thenCheckPhone(String phone) {
+        userValidations.validateUserPhone(getSessionVariable(VAR_RESPONSE), phone);
+    }
+
+    @Then("^I check the website of the created user is (.*)$")
+    public void thenCheckWebsite(String website) {
+        userValidations.validateUserWebsite(getSessionVariable(VAR_RESPONSE), website);
+    }
+
+    @Then("^I check the address of the created user is (.*)$")
+    public void thenCheckAddress(String address) {
+        userValidations.validateUserAddress(getSessionVariable(VAR_RESPONSE), address);
+    }
+
+    @Then("^I check the status of the created user is (.*)$")
+    public void thenCheckStatus(String status) {
+        userValidations.validateUserStatus(getSessionVariable(VAR_RESPONSE), status);
+    }
+
+    @After("@UserTearDown")
     public void tearDownDeleteUser(Scenario scenario) {
         if (!scenario.getName().equals("Deleting user details")) {
             Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));

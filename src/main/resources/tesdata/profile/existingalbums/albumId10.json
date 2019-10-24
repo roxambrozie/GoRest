@@ -1,0 +1,14 @@
+{
+  "id": "10",
+  "user_id": "687",
+  "title": "Nobis et omnis soluta quia atque.",
+  "_links": {
+    "self": {
+      "href": "https://gorest.co.in/public-api/albums/10"
+    },
+    "edit": {
+      "href": "https://gorest.co.in/public-api/albums/10"
+    }
+  }
+}
+

@@ -40,7 +40,7 @@ public class TestConstants {
     public static final String PATH_TO_CREATE_ALBUM_PAYLOAD = "\\tesdata\\profile\\createAlbumPayload.json";
     public static final String PATH_TO_EXISTING_USER = "\\tesdata\\profile\\existingusers\\john_doe.json";
     public static final String PATH_TO_EXISTING_POST = "\\tesdata\\profile\\existingposts\\postId37.json";
-    public static final String PATH_TO_EXISTING_ALBUM = "\\tesdata\\profile\\existingalbums\\albumId11.json";
+    public static final String PATH_TO_EXISTING_ALBUM = "\\tesdata\\profile\\existingalbums\\albumId10.json";
 
 
 }
