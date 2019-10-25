@@ -11,4 +11,9 @@ public class CommonValidations {
     public void validateResponseStatusCode(Response response, int statusCode) {
         Assert.assertEquals(statusCode, response.as(GeneralResponse.class).get_meta().getCode());
     }
+
+    @Step("Then I check the success of the method is set to {1}")
+    public void validateCallSuccess(Response response, String success) {
+        Assert.assertEquals(success, response.as(GeneralResponse.class).get_meta().getSuccess());
+    }
 }

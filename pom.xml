@@ -18,8 +18,8 @@
 
 
     <properties>
-        <serenity.version>2.0.55</serenity.version>
-        <serenity.maven.version>1.5.8</serenity.maven.version>
+        <serenity.version>2.0.80</serenity.version>
+        <serenity.maven.version>2.0.81</serenity.maven.version>
         <serenity.cucumber.version>1.9.1</serenity.cucumber.version>
         <junit.version>4.12</junit.version>
         <maven.failsafe.plugin.version>2.18</maven.failsafe.plugin.version>
@@ -88,6 +88,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-emailer</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -137,13 +143,23 @@
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
                 <version>${serenity.maven.version}</version>
+                <configuration>
+                    <tags>${tags}</tags>
+                    <reports>email</reports>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>net.serenity-bdd</groupId>
                         <artifactId>serenity-core</artifactId>
                         <version>${serenity.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>net.serenity-bdd</groupId>
+                        <artifactId>serenity-emailer</artifactId>
+                        <version>${serenity.version}</version>
+                    </dependency>
                 </dependencies>
+
                 <executions>
                     <execution>
                         <id>services-reports</id>
