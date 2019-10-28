@@ -140,6 +140,11 @@ public class UserStepsDefinition {
         userValidations.validateUserStatus(getSessionVariable(VAR_RESPONSE), status);
     }
 
+    @Then("^I check the id of the created user is (.*)$")
+    public void thenCheckId(String id) {
+        userValidations.validateUserId(getSessionVariable(VAR_RESPONSE), getSessionVariable(VAR_USER_ID));
+    }
+
     @After("@UserTearDown")
     public void tearDownDeleteUser(Scenario scenario) {
         if (!scenario.getName().equals("Deleting user details")) {

@@ -48,5 +48,11 @@ public class UserValidations {
         Assert.assertEquals(status, response.as(GetUserResponse.class).getResult().getStatus());
     }
 
+    @Step("Then I check the id of the created user is {1}")
+    public void validateUserId(Response response, String id) {
+        Assert.assertEquals(id, response.as(GetUserResponse.class).getResult().getId());
+    }
+
+
 
 }
