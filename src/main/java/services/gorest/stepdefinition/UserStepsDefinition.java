@@ -141,7 +141,8 @@ public class UserStepsDefinition {
     }
 
     @Then("^I check the id of the created user is (.*)$")
-    public void thenCheckId(String id) {
+    public void thenCheckId(String userId) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         userValidations.validateUserId(getSessionVariable(VAR_RESPONSE), getSessionVariable(VAR_USER_ID));
     }
 
