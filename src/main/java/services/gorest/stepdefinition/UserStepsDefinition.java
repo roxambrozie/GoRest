@@ -106,8 +106,8 @@ public class UserStepsDefinition {
     }
 
     @Then("^I check the email of the created user is (.*)$")
-    public void thenCheckEmail(String firstName) {
-        userValidations.validateUserEmail(getSessionVariable(VAR_RESPONSE), firstName);
+    public void thenCheckEmail(String email) {
+        userValidations.validateUserEmail(getSessionVariable(VAR_RESPONSE), email);
     }
 
     @Then("^I check the gender of the created user is (.*)$")
