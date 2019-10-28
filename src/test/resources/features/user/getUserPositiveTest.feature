@@ -34,7 +34,7 @@ Feature: Get User Positive Tests
 
     When I retrieve a single user with the id: as expected
     Then I check that the status code from the response body is 200
-    Then I check the id of the created user is as expected 
+    Then I check the id of the created user is as expected
 
   Scenario: Get user and validate mandatory fields
 
@@ -44,7 +44,7 @@ Feature: Get User Positive Tests
     Then I check the email of the created user is jane.doe1@email.com
     Then I check the gender of the created user is female
 
-  Scenario: Validate created users details
+  Scenario: Validate retrieved users details
 
     When I retrieve a single user with the id: as expected
     Then I check that the status code from the response body is 200
@@ -57,3 +57,29 @@ Feature: Get User Positive Tests
     Then I check the address of the created user is 4123 RI
     Then I check the status of the created user is active
 
+  Scenario: Get user and validate success field
+
+    When I retrieve a single user with the id: as expected
+    Then I check that the success from the response body is set to true
+    Then I check that the status code from the response body is 200
+
+  Scenario: Get user and validate message field
+
+    When I retrieve a single user with the id: as expected
+    Then I check that the message from the response body is OK. Everything worked as expected.
+    Then I check that the status code from the response body is 200
+
+  Scenario: Validate retrieved users details, success and message
+
+    When I retrieve a single user with the id: as expected
+    Then I check that the success from the response body is set to true
+    Then I check that the message from the response body is OK. Everything worked as expected.
+    Then I check that the status code from the response body is 200
+    Then I check the name of the created user is Jane Doe
+    Then I check the gender of the created user is female
+    Then I check the date of birth of the created user is 1990-10-20
+    Then I check the email of the created user is jane.doe1@email.com
+    Then I check the phone of the created user is 0040990099
+    Then I check the website of the created user is https://www.janedoe.com/
+    Then I check the address of the created user is 4123 RI
+    Then I check the status of the created user is active
