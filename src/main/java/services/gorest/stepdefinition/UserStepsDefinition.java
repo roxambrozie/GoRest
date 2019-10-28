@@ -94,9 +94,16 @@ public class UserStepsDefinition {
     }
 
     @When("^I update the user with id (.*) with first name (.*), last name (.*), email (.*), status (.*) and gender (.*)$")
-    public void whenUpdateAllUsersDetailsById(String userId, String firstName, String lastName, String email, String status, String gender) {
+    public void whenUpdateUsersMandatoryDetailsById(String userId, String firstName, String lastName, String email, String status, String gender) {
         replaceExpectedWithVariable(userId, VAR_USER_ID);
-        Response response = updateUser.whenUpdateAllUserDetailsById(getSessionVariable(VAR_USER_ID), firstName, lastName, email, status, gender);
+        Response response = updateUser.whenUpdateAllUserMandatoryDetailsById(getSessionVariable(VAR_USER_ID), firstName, lastName, email, status, gender);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with first name (.*), last name (.*), gender (.*), date of birth (.*), email (.*), phone (.*), website (.*), address (.*) and status (.*)$")
+    public void whenUpdateAllUsersDetailsById(String userId, String firstName, String lastName, String gender, String dob, String email, String phone, String website, String address, String status) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateAllUserDetailsById(getSessionVariable(VAR_USER_ID), firstName, lastName, gender, dob, email, phone, website, address, status);
         setSessionVariable(VAR_RESPONSE, response);
     }
 
@@ -106,8 +113,8 @@ public class UserStepsDefinition {
     }
 
     @Then("^I check the email of the created user is (.*)$")
-    public void thenCheckEmail(String firstName) {
-        userValidations.validateUserEmail(getSessionVariable(VAR_RESPONSE), firstName);
+    public void thenCheckEmail(String email) {
+        userValidations.validateUserEmail(getSessionVariable(VAR_RESPONSE), email);
     }
 
     @Then("^I check the gender of the created user is (.*)$")
@@ -141,7 +148,8 @@ public class UserStepsDefinition {
     }
 
     @Then("^I check the id of the created user is (.*)$")
-    public void thenCheckId(String id) {
+    public void thenCheckId(String userId) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
         userValidations.validateUserId(getSessionVariable(VAR_RESPONSE), getSessionVariable(VAR_USER_ID));
     }
 

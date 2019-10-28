@@ -45,13 +45,19 @@ public class UpdateUser extends GoRestActions {
         return whenUpdateUserDetailById(id, user);
     }
 
-    public Response whenUpdateAllUserDetailsById(String id,String firstName, String lastName, String email, String status, String gender) {
+    public Response whenUpdateAllUserMandatoryDetailsById(String id, String firstName, String lastName, String email, String status, String gender) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setGender(gender);
         user.setStatus(status);
+
+        return whenUpdateAllUserDetailsById(id, user);
+    }
+
+    public Response whenUpdateAllUserDetailsById(String id, String firstName, String lastName, String gender, String dob, String email, String phoneNumber, String website, String address, String status) {
+        User user = new User(firstName, lastName, gender, dob, email, phoneNumber, website, address, status);
 
         return whenUpdateAllUserDetailsById(id, user);
     }
