@@ -1,4 +1,4 @@
-@UserSmoke
+@UserSmoke @UserTearDown
 Feature: Smoke testing the users endpoints
 
   Background: Creating a user
