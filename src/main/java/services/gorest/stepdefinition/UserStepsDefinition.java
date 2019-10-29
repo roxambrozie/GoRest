@@ -153,6 +153,62 @@ public class UserStepsDefinition {
         userValidations.validateUserId(getSessionVariable(VAR_RESPONSE), getSessionVariable(VAR_USER_ID));
     }
 
+    @When("^I update the user with id (.*) with the new first name (.*)$")
+    public void whenUpdateUserFirstNameById(String userId, String firstName) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersFirstName(getSessionVariable(VAR_USER_ID), firstName);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new gender (.*)$")
+    public void whenUpdateUserGender(String userId, String gender) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersGender(getSessionVariable(VAR_USER_ID), gender);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new date of birth (.*)$")
+    public void whenUpdateUserDateOfBirth(String userId, String dob) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersDateOfBirth(getSessionVariable(VAR_USER_ID), dob);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new email (.*)$")
+    public void whenUpdateUserEmail(String userId, String email) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersEmail(getSessionVariable(VAR_USER_ID), email);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new phone number (.*)$")
+    public void whenUpdateUserPhone(String userId, String phone) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersPhone(getSessionVariable(VAR_USER_ID), phone);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new website (.*)$")
+    public void whenUpdateUserWebsite(String userId, String website) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersWebsite(getSessionVariable(VAR_USER_ID), website);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new address (.*)$")
+    public void whenUpdateUserAddress(String userId, String address) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersAddress(getSessionVariable(VAR_USER_ID), address);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
+    @When("^I update the user with id (.*) with the new status (.*)$")
+    public void whenUpdateUserStatus(String userId, String status) {
+        replaceExpectedWithVariable(userId, VAR_USER_ID);
+        Response response = updateUser.whenUpdateUsersStatus(getSessionVariable(VAR_USER_ID), status);
+        setSessionVariable(VAR_RESPONSE, response);
+    }
+
     @After("@UserTearDown")
     public void tearDownDeleteUser(Scenario scenario) {
         if (!scenario.getName().equals("Deleting user details")) {

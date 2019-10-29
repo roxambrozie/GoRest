@@ -8,6 +8,7 @@ import services.gorest.models.User;
 import utils.reusable.specifications.ReusableSpecifications;
 
 public class UpdateUser extends GoRestActions {
+    User user = new User();
 
     private String UPDATE_USER_URL = getBaseUri() + USERS_ENDPOINT;
 
@@ -40,13 +41,11 @@ public class UpdateUser extends GoRestActions {
     }
 
     public Response whenUpdateUsersLastNameUsingId(String id, String lastName) {
-        User user = new User();
         user.setLastName(lastName);
         return whenUpdateUserDetailById(id, user);
     }
 
     public Response whenUpdateAllUserMandatoryDetailsById(String id, String firstName, String lastName, String email, String status, String gender) {
-        User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
@@ -62,4 +61,43 @@ public class UpdateUser extends GoRestActions {
         return whenUpdateAllUserDetailsById(id, user);
     }
 
+    public Response whenUpdateUsersFirstName(String id, String firstName) {
+        user.setFirstName(firstName);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersGender(String id, String gender) {
+        user.setGender(gender);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersDateOfBirth(String id, String dob){
+        user.setDob(dob);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersEmail(String id, String email){
+        user.setEmail(email);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersPhone(String id, String phone) {
+        user.setPhone(phone);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersWebsite(String id, String website) {
+        user.setWebsite(website);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersAddress(String id, String address) {
+        user.setAddress(address);
+        return whenUpdateUserDetailById(id, user);
+    }
+
+    public Response whenUpdateUsersStatus(String id, String status) {
+        user.setStatus(status);
+        return whenUpdateUserDetailById(id, user);
+    }
 }
