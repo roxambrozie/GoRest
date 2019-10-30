@@ -16,14 +16,13 @@ import lombok.NoArgsConstructor;
 })
 @NoArgsConstructor
 @Data
-public class InvalidResult
-{
+public class InvalidResult {
     @JsonProperty("name")
     private String name;
     @JsonProperty("message")
     private String message;
     @JsonProperty("code")
-    private int code;
+    private String code;
     @JsonProperty("status")
-    private int status;
+    private String status;
 }

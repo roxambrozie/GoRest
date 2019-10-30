@@ -6,8 +6,6 @@ import utils.property.PropertiesUtil;
 
 import java.util.Properties;
 
-import static java.lang.System.getProperty;
-
 public class TestConstants {
 
     private static Logger log = LoggerFactory.getLogger(TestConstants.class);
