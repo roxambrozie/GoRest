@@ -34,12 +34,12 @@ public class CommonValidations {
     }
 
     @Step("Then I check the code from the invalid result is {1}")
-    public void validateInvalidResultCode(Response response, String code) {
+    public void validateInvalidResultCode(Response response, int code) {
         Assert.assertEquals(code, response.as(InvalidResponse.class).getResult().getCode());
     }
 
     @Step("Then I check the status from the invalid result is {1}")
-    public void validateInvalidResultStatus(Response response, String status) {
+    public void validateInvalidResultStatus(Response response, int status) {
         Assert.assertEquals(status, response.as(InvalidResponse.class).getResult().getStatus());
     }
 }

@@ -42,12 +42,12 @@ public class CommonStepDefinitions {
     }
 
     @Then("^I check that the code from the invalid result is (.*)$")
-    public void thenCheckCodeFromInvalidResult(String code) {
+    public void thenCheckCodeFromInvalidResult(int code) {
         commonValidations.validateInvalidResultCode(getSessionVariable(VAR_RESPONSE), code);
     }
 
     @Then("^I check that the status code from the invalid result is (.*)$")
-    public void thenCheckNameFromInvalidStatus(String statusCode) {
+    public void thenCheckNameFromInvalidStatus(int statusCode) {
         commonValidations.validateInvalidResultStatus(getSessionVariable(VAR_RESPONSE), statusCode);
     }
 
