@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import services.gorest.models.InvalidResult;
 import services.gorest.models.nodes._Meta;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class InvalidResponse {
     @JsonProperty
     private _Meta _meta;
     @JsonProperty("result")
-    private InvalidResponse result;
+    private InvalidResult result;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 }

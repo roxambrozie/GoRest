@@ -22,7 +22,8 @@ import static utils.methods.ReusableMethods.generateRandomInt;
 @WithTags({
         @WithTag(type = "service", name = "GoRest"),
         @WithTag(type = "type", name = "Smoke"),
-        @WithTag(type = "type", name = "Regression")
+        @WithTag(type = "type", name = "Regression"),
+        @WithTag(type = "type", name = "User")
 })
 public class CreateUserTest {
 
@@ -46,7 +47,7 @@ public class CreateUserTest {
         myUser.setFirstName("Isaac");
         myUser.setLastName("Asimov");
         myUser.setGender("male");
-        myUser.setEmail(generateRandomInt(100,100000) + "@email.com");
+        myUser.setEmail(generateRandomInt(100, 100000) + "@email.com");
     }
 
     @Test

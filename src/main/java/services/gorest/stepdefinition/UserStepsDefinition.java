@@ -211,7 +211,7 @@ public class UserStepsDefinition {
 
     @After("@UserTearDown")
     public void tearDownDeleteUser(Scenario scenario) {
-        if (!scenario.getName().equals("Deleting user details")) {
+        if (!scenario.getName().contains("Deleting user details")) {
             Response response = getUser.getUserById(getSessionVariable(VAR_USER_ID));
             if (response.as(GetUserResponse.class).get_meta().getCode() == 200) {
                 deleteUser.deleteUserById(getSessionVariable(VAR_USER_ID));

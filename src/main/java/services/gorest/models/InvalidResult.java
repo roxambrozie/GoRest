@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 })
 @NoArgsConstructor
 @Data
-public class InvalidResult
-{
+public class InvalidResult {
     @JsonProperty("name")
     private String name;
     @JsonProperty("message")
